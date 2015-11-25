@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
-use Carbon\Carbon;
-
-class ArticleController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +17,17 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
-    }
 
+/*       insert data
+ DB::table('users')->insert( array(
+                array( 'username' => 'test1', 'email'    => '1@163.com' ),
+                array( 'username' => 'test2', 'email'    => '2@163.com' )
+        ) );*/
+
+        $users  = DB::table('users')->get();
+     //   $users1 = DB::table('users')->lists('username');//just get username field
+        return view('user.user',compact('users'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -39,16 +46,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-
-        $datas = $request->all();
-        $datas['published'] = Carbon::now();
-        //Articles::create($datas);
-
-    }
-
-    public function publish()
-    {
-        return view('article.publish');
+        //
     }
 
     /**

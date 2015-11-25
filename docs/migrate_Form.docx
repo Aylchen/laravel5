@@ -1,0 +1,16 @@
+﻿Migrate
+
+1） 目录：database/migrate/
+2) $ php artisan migrate
+	// $ php artisan migrate:rollback
+
+3)自己建表：
+   $ php artisan make:migration crate_..._table
+
+
+
+表单验证
+
+$ php artisan make:request CreateUserRequest
+	
+

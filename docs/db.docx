@@ -1,0 +1,54 @@
+﻿数据库操作：
+
+1/ DB   //DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+	1) DB::select($sql,[]);
+	2) DB::insert($sql,[]);
+	3) DB::update($sql,[]);
+	4) DB::delete($sql,[]);
+事务处理： DB::transanction(function() { });  //异常会自动回滚
+
+DB::beginTransaction /  DB::rollback(); / DB::commit();
+
+查询构造器 query builder
+
+1) 获取所有数据
+	DB::table('<tableName>')->get(); //use Illuminate\Support\Facades\DB;
+
+	获取单一字段
+	DB::table('<tableName>')->lists('<filedName>'[,'diyName']);
+
+2) 获取某一条数据
+	DB::table('<tableName>')->where('filedName','','value')->first();
+	
+	获取单一字段
+	$name = DB::table('<tableName>')->where('filedName','','value')->pluck('name');
+
+3) where
+	where('fileName','>/=/<...','value')
+	orWhere(...)
+	whereBetween('filedName',[1,100]) /   whereNotBetween
+	whereIn('filedName',[1,2,3])  / whereNotIn
+	whereNull('fieldName')
+4) orderBy('fieldName','asc/desc')
+   groupBy('fieldName')
+   having(...)
+
+5) offset limit
+	->skip(10)->take(5)->get()
+
+6) join查询
+	join('joinTb','tb.filedName','=','joinTb.fileName')
+
+高级Where子句
+
+聚合方法：max/min/avg/count/sum...
+
+DB::table('<tableName>')->count()
+DB::table('<tableName>')->max/min/avg/sum('<fieldName>')
+
+添加数据：插入一条参数一维数组，插入多条用多维数组
+DB::table('<tableName>')->insert(['field1'=>'val1','field2'=>'val2'...])
+//insert → insertGetId 可返回自增的id
+
+更新数据
+DB::table('<tableName>')->where('','')->update([''=>'']);

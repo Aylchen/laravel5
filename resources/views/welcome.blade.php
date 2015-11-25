@@ -38,7 +38,10 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5 Chen Yalei</div>
+                <div class="title">Laravel 5 {{ Auth::user()->username }}</div>
+                @if(!is_null(Auth::user()->username))
+                    <a href="/auth/logout">Logout</a>
+                    @endif
             </div>
         </div>
     </body>

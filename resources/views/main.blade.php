@@ -10,6 +10,9 @@
 <body>
 <div class="container">
     @yield('content')
+    @section('sidebar')
+{{--        Here is the parent's sidebar
+        @show--}}
 </div>
 </body>
 </html>
