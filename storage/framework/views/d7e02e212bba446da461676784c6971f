@@ -1,0 +1,28 @@
+<?php $__env->startSection('content'); ?>
+    <h1>登录</h1>
+    <?php echo Form::open(['url' => '/auth/login']); ?>
+
+    <div class="form-group">
+        <?php echo Form::label('username','UserName:'); ?>
+
+        <?php echo Form::text('username', null, ['class' => 'form-control']); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('password','Password:'); ?>
+
+        <?php echo Form::password('password', ['class' => 'form-control']); ?>
+
+    </div>
+
+    <?php echo Form::submit('Submit', ['class'=>'btn btn-primary form-control']); ?>
+
+
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

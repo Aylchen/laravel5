@@ -1,0 +1,33 @@
+<?php $__env->startSection('content'); ?>
+    <h1>文章发表</h1>
+    <?php echo Form::open(['url' => '/published']); ?>
+
+    <?php /*    <?php if(!is_null($results)): ?>
+        <?php echo e($results->name); ?>
+
+        <?php endif; ?>*/ ?>
+
+    <div class="form-group">
+        <?php echo Form::label('title','Title:'); ?>
+
+        <?php echo Form::text('title', null, ['class' => 'form-control']); ?>
+
+    </div>
+
+    <div class="form-group">
+        <?php echo Form::label('content','Content:'); ?>
+
+        <?php echo Form::textarea('content', null, ['class' => 'form-control']); ?>
+
+    </div>
+
+    <?php echo Form::submit('Submit', ['class'=>'btn btn-primary form-control']); ?>
+
+
+    <?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
