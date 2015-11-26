@@ -52,3 +52,15 @@ DB::table('<tableName>')->insert(['field1'=>'val1','field2'=>'val2'...])
 
 更新数据
 DB::table('<tableName>')->where('','')->update([''=>'']);
+
+
+悲观锁: pessimistic locking
+
+sharedLock (用于select语句)
+DB:table('<tableName>')->where()->sharedLock()->get();
+
+锁住更新: lockForUpdate
+
+
+
+

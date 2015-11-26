@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -18,12 +18,13 @@ class UserController extends Controller
     public function index()
     {
 
-/*       insert data
- DB::table('users')->insert( array(
+       //insert data
+/* DB::table('users')->insert( array(
                 array( 'username' => 'test1', 'email'    => '1@163.com' ),
                 array( 'username' => 'test2', 'email'    => '2@163.com' )
         ) );*/
-
+        // update data
+    DB::table('users')->where('username','test2')->update(['email' => 'test2@163.com']);
         $users  = DB::table('users')->get();
      //   $users1 = DB::table('users')->lists('username');//just get username field
         return view('user.user',compact('users'));
