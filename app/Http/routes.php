@@ -40,3 +40,5 @@ Route::get('/auth/logout', 'Auth\AuthController@getLogout');*/
 Route::controller('auth', 'Auth\AuthController');
 
 Route::get('/users', 'UserController@index');
+
+Route::get('/test','UserController@test');
