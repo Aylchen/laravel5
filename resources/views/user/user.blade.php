@@ -2,14 +2,13 @@
 
 @section('content')
     <h1>All Users:{!! Auth::user()->username !!}</h1>
-    ul.
-    @foreach($users as $user)
+    <ul class="list-group">
+        @foreach($users as $user)
+        <li class="list-item">
+            UserName:{!! $user->username !!}
+            Email:   {!! $user->email !!}
+        </li>
+        @endforeach
+    </ul>
 
-    UserName:{!! $user->username !!}
-    Email:   {!! $user->email !!}
-    <br/>
-
-    @endforeach
-
-
-    @endsection
+@endsection
