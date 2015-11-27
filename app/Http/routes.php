@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/',['middleware'=>'auth',function () {
-    return view('welcome');
-}]);
-//
 /**
+    Method1: Route::get('/',['middleware'=>'auth',function () {
+        return view('welcome');
+    }]);
+
     Method2: Route::get('/', function () {return view('welcome');})->middleware('auth');
     Method3: Route::group(['middleware' => 'auth'], function () {
         Route::get('/', function () {
@@ -23,20 +23,24 @@ Route::get('/',['middleware'=>'auth',function () {
         }) ;
     });
  */
-Route::get('/publish', 'ArticleController@publish');
-
-Route::post('/publish','ArticleController@store');
-
-/*Route::get('/auth/login', 'Auth\AuthController@getLogin');
-
-Route::post('/auth/login', 'Auth\AuthController@postLogin');
-
-Route::get('/auth/register', 'Auth\AuthController@getRegister');
-
-Route::post('/auth/register', 'Auth\AuthController@postRegister');
-
-Route::get('/auth/logout', 'Auth\AuthController@getLogout');*/
+Route::get('/', function () {
+    return  view('welcome');
+});
 
 Route::controller('auth', 'Auth\AuthController');
 
 Route::get('/users', 'UserController@index');
+
+Route::get('/test', 'UserController@test');
+
+/*Route::get('/articles', 'ArticleController@index');
+
+Route::get('/articles/{id}', 'ArticleController@show');
+
+Route::get('/articles/create', 'ArticleController@create');
+
+Route::post('/articles','ArticleController@store');
+
+Route::get('/articles/{id}/edit', 'ArticleController@edit');*/
+
+Route::resource('articles', 'ArticleController');

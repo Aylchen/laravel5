@@ -24,9 +24,10 @@ class UserController extends Controller
                 array( 'username' => 'test2', 'email'    => '2@163.com' )
         ) );*/
         // update data
-    DB::table('users')->where('username','test2')->update(['email' => 'test2@163.com']);
-        $users  = DB::table('users')->get();
+        //DB::table('users')->where('username','test2')->update(['email' => 'test2@163.com']);
+      //  $users  = DB::table('users')->get();
      //   $users1 = DB::table('users')->lists('username');//just get username field
+        $users = User::all();
         return view('user.user',compact('users'));
     }
     /**
@@ -39,6 +40,17 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * test FirstOrCreate and FirstOrNew
+     */
+    public function test()
+    {
+        //if not exists , then create one and return the instance;
+        $data = User::firstOrCreate(['username' => 'Aylchen']);
+        //if no exists , create a new instance of this new record;
+        $data2 = User::firstOrNew(['username' => 'AAA']);
+        $data2->save();
+    }
     /**
      * Store a newly created resource in storage.
      *

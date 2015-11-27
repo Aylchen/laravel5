@@ -137,8 +137,13 @@ trait AuthenticatesUsers
      */
     public function loginUsername()
     {
+<<<<<<< HEAD
        // return property_exists($this, 'username') ? $this->username : 'email';
         return 'username';
+=======
+        return 'username';
+        return property_exists($this, 'username') ? $this->username : 'email';
+>>>>>>> 6db13143e71beac3d0d23289d8075ced08806b7d
     }
 
     /**

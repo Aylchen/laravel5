@@ -38,10 +38,16 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5 {{ Auth::user()->username }}</div>
-                @if(!is_null(Auth::user()->username))
-                    <a href="/auth/logout">Logout</a>
+                <div class="title">Welcome
+                    @if(! is_null( Illuminate\Support\Facades\Auth::user() ))
+                        {{  Illuminate\Support\Facades\Auth::user()->username }}
+                    @else
+                        <a href="/auth/login">Login</a>
                     @endif
+                </div>
+                @if(!is_null( Illuminate\Support\Facades\Auth::user()))
+                    <a href="/auth/logout">Logout</a>
+                @endif
             </div>
         </div>
     </body>
