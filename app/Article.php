@@ -10,7 +10,7 @@ class Article extends Model
     //
     protected $table = "articles";
 
-    protected $fillable = ['title', 'content', 'published'] ;
+    protected $fillable = ['title', 'content', 'user_id'] ;
 
     //set Field Attribute
    /* public function setPublishedAttribute()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Article;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -21,6 +22,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles =  Article::latest()-> paginate(5);
+
         return view('article.index', compact('articles'));
     }
 
@@ -43,8 +45,8 @@ class ArticleController extends Controller
     public function store(Requests\ArticleRequest $request)
     {
         //使用Request 进行验证 ，request对象为自己创建的Request对象
-        $input = array_merge(['user_id'=>Auth::user()->id], $request->all());
-        Article::create($input);
+        Article::create(array_merge(['user_id'=>Auth::user()->id], $request->all()));
+
         return redirect('/articles');
     }
     /**
@@ -64,6 +66,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
+
         return view('article.show', compact('article'));
     }
 
@@ -76,6 +79,11 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
+
+        if( $article->user_id != Auth::user()->id ) {
+            return "Access Denied";
+        }
+
         return view('article.edit', compact('article'));
     }
 
@@ -89,6 +97,7 @@ class ArticleController extends Controller
     public function update(Requests\ArticleRequest $request, $id)
     {
         Article::find($id)->update($request->all());
+
         return redirect('/articles');
     }
 
@@ -102,4 +111,6 @@ class ArticleController extends Controller
     {
         //
     }
+
+
 }
