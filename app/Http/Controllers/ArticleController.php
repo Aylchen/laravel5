@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use Carbon\Carbon;
+use App\Article;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
+
+    public function __construct()
+    { // Auth all except index and show Article
+        $this->middleware('auth',['except' => ['index','show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +20,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles =  Article::latest()-> paginate(5);
+        return view('article.index', compact('articles'));
     }
 
     /**
@@ -28,29 +31,30 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('article.publish');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Validation Method 1
+     * @param Requests\ArticleRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(Requests\ArticleRequest $request)
     {
-
-        $datas = $request->all();
-        $datas['published'] = Carbon::now();
-        //Articles::create($datas);
-
+        //使用Request 进行验证 ，request对象为自己创建的Request对象
+        $input = array_merge(['user_id'=>Auth::user()->id], $request->all());
+        Article::create($input);
+        return redirect('/articles');
     }
-
-    public function publish()
+    /**
+     * Validation Method 2
+     */
+/*    public function store(Request $request)
     {
-        return view('article.publish');
-    }
-
+        $this->validate($request,['title' => 'required', 'content' => 'required']);
+        ...
+    }*/
     /**
      * Display the specified resource.
      *
@@ -59,7 +63,8 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $article = Article::findOrFail($id);
+        return view('article.show', compact('article'));
     }
 
     /**
@@ -70,7 +75,8 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('article.edit', compact('article'));
     }
 
     /**
@@ -80,9 +86,10 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\ArticleRequest $request, $id)
     {
-        //
+        Article::find($id)->update($request->all());
+        return redirect('/articles');
     }
 
     /**
