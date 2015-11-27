@@ -25,8 +25,9 @@ class UserController extends Controller
         ) );*/
         // update data
         //DB::table('users')->where('username','test2')->update(['email' => 'test2@163.com']);
-        $users  = DB::table('users')->get();
+      //  $users  = DB::table('users')->get();
      //   $users1 = DB::table('users')->lists('username');//just get username field
+        $users = User::all();
         return view('user.user',compact('users'));
     }
     /**
