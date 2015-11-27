@@ -6,7 +6,7 @@
         @foreach($articles as $article)
         <li>
             <p>Title: <a href="{{ url('articles', $article->id) }}">{{ $article->title }}</a></p>
-            <p>Content: {{ $article->content }}</p>
+            <p>Content:{{ mb_substr($article->content, 0, 50) }}...</p>
             <p>Author: {{ App\User::find($article->user_id)->username }}</p>
         </li>
         @endforeach
