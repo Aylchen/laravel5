@@ -23,15 +23,15 @@
         }) ;
     });
  */
-Route::get('/', function () {
-    return  view('welcome');
-});
+Route::get('/', 'IndexController@index');
+
+Route::get('/home', 'IndexController@home');
 
 Route::controller('auth', 'Auth\AuthController');
 
-Route::get('/users', 'UserController@index');
+Route::get('/articles/{id}/delete', 'ArticleController@destroy');
 
-Route::get('/test', 'UserController@test');
+Route::resource('articles', 'ArticleController');
 
 /*Route::get('/articles', 'ArticleController@index');
 
@@ -42,5 +42,3 @@ Route::get('/articles/create', 'ArticleController@create');
 Route::post('/articles','ArticleController@store');
 
 Route::get('/articles/{id}/edit', 'ArticleController@edit');*/
-
-Route::resource('articles', 'ArticleController');

@@ -16,9 +16,13 @@ class IndexController extends Controller
      */
     public function index()
     {
-        //
+        return  view('welcome');
     }
 
+    public function home()
+    {
+        return redirect('/');
+    }
     /**
      * Show the form for creating a new resource.
      *

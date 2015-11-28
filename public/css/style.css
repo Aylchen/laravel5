@@ -1,0 +1,13 @@
+form, .list-group, article, .navbar {
+    width: 70%;
+    margin: 0 auto;
+}
+
+h1, h2, h3, h4,h5 {
+    text-align: center;
+}
+
+.pagination {
+    margin-right: 15%;
+    float: right;
+}

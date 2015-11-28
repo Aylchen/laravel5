@@ -18,8 +18,8 @@
         {!! Form::label('password_confirmation','Password_confirmation:') !!}
         {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Confirm the password']) !!}
     </div>
-    <a href="/auth/login">login</a>
-    {!! Form::submit('Submit', ['class'=>'btn btn-primary form-control']) !!}
+    <a href="/auth/login">Sign In</a>
+    {!! Form::submit('Sign Up', ['class'=>'btn btn-primary form-control']) !!}
 
     {!! Form::close() !!}
 

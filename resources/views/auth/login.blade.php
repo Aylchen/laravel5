@@ -10,9 +10,9 @@
         {!! Form::label('password','Password:') !!}
         {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Input The password']) !!}
     </div>
-    <a href="/auth/register">Regist</a>
-    {!! Form::submit('Submit', ['class'=>'btn btn-primary form-control']) !!}
 
+    <a href="/auth/register">Sign Up</a>
+    {!! Form::submit('Sign In', ['class'=>'btn btn-primary form-control']) !!}
     {!! Form::close() !!}
 
     @include('error')

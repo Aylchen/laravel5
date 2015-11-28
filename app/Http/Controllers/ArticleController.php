@@ -78,12 +78,8 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article = Article::find($id);
-
-        if( $article->user_id != Auth::user()->id ) {
-            return "Access Denied";
-        }
-
+        $article = Article::find( $id );
+        $this->checkAccess( $article->user_id );
         return view('article.edit', compact('article'));
     }
 
@@ -109,8 +105,21 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->checkAccess( Article::find($id) -> user_id );
+
+        if( Article::where("id",$id)->delete() ) {
+            return redirect('/articles');
+        } else {
+            $msg = 'Delete Failed';
+            return view('errors.redirect', compact('msg'));
+        }
     }
 
+    public function checkAccess( $user_id )
+    {
 
+        if( $user_id != Auth::user()->id ) {
+            die( "Access Denied" );
+        }
+    }
 }
