@@ -1,5 +1,4 @@
 @extends('main')
-
 @section('content')
     <h1>文章列表&nbsp;&nbsp;
         <a href="/articles/create" class="btn btn-info">新增文章</a>
@@ -15,5 +14,3 @@
     </ul>
     {!! $articles->render() !!}
 @endsection
-
-
