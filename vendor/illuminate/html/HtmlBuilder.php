@@ -81,6 +81,40 @@ class HtmlBuilder {
 		return '<link'.$this->attributes($attributes).'>'.PHP_EOL;
 	}
 
+
+	function theme_script($url, $attributes = array(), $secure = null)
+	{
+		$url = theme_view().$url;
+
+		$attributes['src'] = $this->url->asset($url, $secure);
+
+		return '<script'.$this->attributes($attributes).'></script>'.PHP_EOL;
+	}
+
+	/**
+	 * Generate a link to a CSS file.
+	 *
+	 * @param  string  $url
+	 * @param  array   $attributes
+	 * @param  bool    $secure
+	 * @return string
+	 */
+	function theme_style($url, $attributes = array(), $secure = null)
+	{
+		$url = theme_view().$url;
+
+		$defaults = array('media' => 'all', 'type' => 'text/css', 'rel' => 'stylesheet');
+
+		$attributes = $attributes + $defaults;
+
+		$attributes['href'] = $this->url->asset($url, $secure);
+
+		return '<link'.$this->attributes($attributes).'>'.PHP_EOL;
+	}
+
+
+
+
 	/**
 	 * Generate an HTML image element.
 	 *

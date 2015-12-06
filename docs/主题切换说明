@@ -1,0 +1,14 @@
+关于Theme切换的说明:
+默认模板为default；
+修改了helpers.php下view方法，将主题添加为前置
+修改View/Compiler/BladeCompiler.php中两个方法：compileExtends / compileInclude
+
+更改主题只需要修改config/app.php中的theme即可
+
+
+添加样式的变化
+
+在HtmlBuilder中添加了theme_script和theme_style两个方法，可以在原来的写法上将theme作前置加上
+
+//要做
+不同主题公共模板和样式的使用

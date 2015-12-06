@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Laravel</title>
+    <?php echo Html::style('/css/bootstrap.min.css'); ?>
+
+    <?php echo Html::style('/css/style.css'); ?>
+
+    <?php echo Html::script('/js/jquery.min.js'); ?>
+
+    <?php echo Html::script('/js/bootstrap.min.js'); ?>
+
+</head>
+<body>
+<div class="container">
+    <?php echo $__env->make(theme_view().'.'.'nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="content">
+        <?php echo $__env->yieldContent('content'); ?>
+    </div>
+    <hr/>
+    <footer>
+        <p class="text-center">&copy;<em>Aylchen</em></p>
+    </footer>
+</div>
+</body>
+</html>

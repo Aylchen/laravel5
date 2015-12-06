@@ -1,0 +1,13 @@
+<?php $__env->startSection('content'); ?>
+    <h1><small>文章编辑：</small><?php echo e($article->title); ?></h1>
+    <?php echo Form::model($article, ['method' => 'PATCH', 'url' => url('articles', $article->id) ]); ?>
+
+    <?php echo $__env->make(theme_view().'.'.'article.article_form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo Form::close(); ?>
+
+    <?php echo $__env->make(theme_view().'.'.'error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make(theme_view().'.'.'main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

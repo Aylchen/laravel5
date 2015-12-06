@@ -719,7 +719,7 @@ if (! function_exists('view')) {
      * @param  array   $mergeData
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    function view($view = null, $data = [], $mergeData = [])
+    /*function view($view = null, $data = [], $mergeData = [])
     {
         $factory = app('Illuminate\Contracts\View\Factory');
 
@@ -728,5 +728,28 @@ if (! function_exists('view')) {
         }
 
         return $factory->make($view, $data, $mergeData);
+    }*/
+
+    function view($view = null, $data = [], $mergeData = [])
+    {
+        $factory = app('Illuminate\Contracts\View\Factory');
+
+        if (func_num_args() === 0) {
+            return $factory;
+        }
+
+        return $factory->make(theme_view() . '.' . $view, $data, $mergeData);
+    }
+
+}
+
+if(! function_exists('theme_view')) {
+    /**
+     * return current theme
+     * @return mixed|string
+     */
+    function theme_view()
+    {
+        return (!config('app.theme') || config('app.theme')=='default') ? "default" : config('app.theme');
     }
 }

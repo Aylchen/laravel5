@@ -1,0 +1,81 @@
+<?php $__env->startSection('content'); ?>
+    <Article>
+        <div class="pull-left">
+            <a href="javascript:history.back();"> <<&nbsp;返回 </a>
+        </div>
+        <?php if( $article->user_id == Auth::user()->id): ?>
+        <div class="pull-right">
+            <a href="<?php echo e(url('articles', [$article->id, 'edit'])); ?> " class="btn btn-primary">Edit</a>
+            <a href="<?php echo e(url('articles', [$article->id, 'delete'])); ?>" class="btn btn-danger">Delete</a>
+        </div>
+        <?php endif; ?>
+        <div class="page-header">
+            <h3><?php echo e($article->title); ?></h3>
+        </div>
+        <p><?php echo e($article->content); ?></p>
+
+    </Article>
+    <hr/>
+    <div class="link-div">
+        <?php if(! empty($prev_id)): ?>
+            <a href="<?php echo e(url('articles', $prev_id)); ?>" class="text-left"><<上一篇</a>
+        <?php endif; ?>
+        <?php if(! empty($next_id)): ?>
+            <a href="<?php echo e(url('articles', $next_id)); ?>" class="pull-right">下一篇>></a>
+        <?php endif; ?>
+    </div>
+    <?php /* commit a comment by the current user */ ?>
+    <comment>
+        <?php echo Form::open(['url'=>url('comments', $article->id)]); ?>
+
+        <div class="form-group">
+            <?php echo Form::label('content','发表评论'); ?>
+
+            <?php echo Form::textarea('content', null, ['rows' => 3, 'class' => 'form-control', 'placeholder' => 'Say Something...']); ?>
+
+        </div>
+        <?php echo Form::hidden('article_id', $article->id); ?>
+
+        <?php echo Form::submit('提交评论', ['class'=>'btn btn-primary form-control']); ?>
+
+        <?php echo Form::close(); ?>
+
+        <?php echo $__env->make(theme_view().'.'.'error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </comment>
+    <?php /* comment list */ ?>
+    <comments>
+        <h3 class="text-left comment">评论列表(<?php echo e($comments->count()); ?>)：</h3>
+        <ul class="list-group comment-list">
+        <?php if( $comments->count() == 0 ): ?>
+            <li class="list-group-item">暂无评论</li>
+        <?php else: ?>
+            <?php foreach($comments as $comment): ?>
+                <li class="list-group-item">
+                    <div class="comment-user">
+                        <small class="text-primary"><?php echo e($comment->user->updated_at); ?></small>
+                        &nbsp;&nbsp;<strong><?php echo e($comment->user->username); ?></strong>
+                    </div>
+                    <div class="comment-content">
+                        <?php echo e($comment->content); ?>
+
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </ul>
+    </comments>
+<?php $__env->stopSection(); ?>
+
+<script>
+/*    $(function() {
+        $('.comment-list').on('click', '.pagination a', function (e) {
+            var url = $(this).attr('href');
+            $(".comment-list").load(url+" .comment-list");
+            return false;
+        });
+    });*/
+
+</script>
+
+
+<?php echo $__env->make(theme_view().'.'.'main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

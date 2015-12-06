@@ -646,7 +646,6 @@ class Container implements ArrayAccess, ContainerContract
         $this->fireResolvingCallbacks($abstract, $object);
 
         $this->resolved[$abstract] = true;
-
         return $object;
     }
 

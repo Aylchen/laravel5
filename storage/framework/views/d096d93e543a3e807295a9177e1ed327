@@ -1,0 +1,17 @@
+<?php $__env->startSection('content'); ?>
+    <h1 class="text-left"><?php echo e($title); ?>&nbsp;&nbsp;<a href="/articles/create" class="btn btn-info">新增文章</a></h1>
+    <hr/>
+    <ul class="list-group">
+        <?php foreach($articles as $article): ?>
+        <li class="list-group-item">
+            <p>Title: <a href="<?php echo e(url('articles', $article->id)); ?>"><?php echo e($article->title); ?></a></p>
+            <p>Content:<?php echo e(mb_substr($article->content, 0, 50)); ?>...</p>
+            <p>Author: <?php echo e(App\User::find($article->user_id)->username); ?></p>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php echo $articles->render(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make(theme_view().'.'.'main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

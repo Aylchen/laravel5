@@ -42,7 +42,9 @@ class UserController extends Controller
     {
         $articles = Article::where('user_id', '=', Auth::user()->id)->latest()->paginate(10);
 
-        return view('article.index', compact('articles'));
+        $title    = "我的文章";
+
+        return view('article.index', compact('articles', 'title'));
     }
 
     /**

@@ -1,0 +1,13 @@
+<?php $__env->startSection('content'); ?>
+    <h1>文章发表</h1>
+    <?php echo Form::open(['url' => 'articles']); ?>
+
+    <?php echo $__env->make(theme_view().'.'.'article.article_form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo Form::close(); ?>
+
+    <?php echo $__env->make(theme_view().'.'.'error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make(theme_view().'.'.'main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

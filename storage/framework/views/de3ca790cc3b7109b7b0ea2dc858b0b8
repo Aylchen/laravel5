@@ -1,0 +1,10 @@
+<?php if( $errors->any() ): ?>
+<ul class="list-group">
+    <?php foreach($errors->all() as $error): ?>
+        <li class="list-group-item list-group-item-danger">
+            <?php echo e($error); ?>
+
+        </li>
+    <?php endforeach; ?>
+</ul>
+<?php endif; ?>

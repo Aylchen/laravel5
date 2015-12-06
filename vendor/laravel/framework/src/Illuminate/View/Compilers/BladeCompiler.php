@@ -696,7 +696,7 @@ class BladeCompiler extends Compiler implements CompilerInterface
             $expression = substr($expression, 1, -1);
         }
 
-        $data = "<?php echo \$__env->make($expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        $data = "<?php echo \$__env->make(theme_view().'.'.$expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
 
         $this->footer[] = $data;
 
@@ -715,7 +715,7 @@ class BladeCompiler extends Compiler implements CompilerInterface
             $expression = substr($expression, 1, -1);
         }
 
-        return "<?php echo \$__env->make($expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        return "<?php echo \$__env->make(theme_view().'.'.$expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
     }
 
     /**

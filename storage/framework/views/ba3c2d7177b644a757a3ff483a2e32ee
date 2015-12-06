@@ -1,0 +1,33 @@
+<?php $__env->startSection('content'); ?>
+
+    <h1 class="text-left">我的评论</h1>
+    <hr/>
+    <ul class="list-group">
+        <?php if( $comments->count() == 0 ): ?>
+            <li class="list-group-item">暂无评论</li>
+        <?php else: ?>
+            <?php foreach($comments as $comment): ?>
+                <li class="list-group-item" style="position:relative;">
+                    <div class="comment-user">
+                        <h5 class="text-left">
+                            <a href="<?php echo e(url('articles', $comment->article->id)); ?>"><?php echo e($comment->article->title); ?></a>
+                        </h5>
+                        <small class="text-warning"><?php echo e($comment->updated_at); ?></small>
+                    </div>
+                    <div class="comment-content">
+                        <?php echo e($comment->content); ?>
+
+                    </div>
+                    <div class="pull-right absolute-btn">
+                        <a type="button" class="btn btn-info" href="<?php echo e(url('user', ['comments', $comment->id])); ?>">编辑</a>
+                        <a type="button" class="btn btn-danger" href="<?php echo e(url('user', ['comments', 'delete',$comment->id])); ?>">删除</a>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+            <?php echo $comments->render(); ?>
+
+        <?php endif; ?>
+    </ul>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make(theme_view().'.'.'main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

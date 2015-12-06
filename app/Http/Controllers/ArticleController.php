@@ -23,7 +23,9 @@ class ArticleController extends Controller
     {
         $articles =  Article::latest()-> paginate(5);
 
-        return view('article.index', compact('articles'));
+        $title    = '文章列表';
+
+        return view('article.index', compact('articles', 'title'));
     }
 
     /**

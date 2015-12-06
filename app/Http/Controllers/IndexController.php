@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class IndexController extends Controller
 {
@@ -32,18 +33,6 @@ class IndexController extends Controller
     {
     }
 
-    public function test(Request $request)
-    {
-        $results = $request->all();
-        return view('test',compact('results'));
-    }
-
-    public function about()
-    {
-        $about_msg = "<span style='color:red'>This is about page</span>";
-        return $about_msg;
-        return view('index.about',compact('about_msg'));
-    }
     /**
      * Store a newly created resource in storage.
      *
