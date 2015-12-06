@@ -11,18 +11,7 @@
 |
 */
 
-/**
-    Method1: Route::get('/',['middleware'=>'auth',function () {
-        return view('welcome');
-    }]);
 
-    Method2: Route::get('/', function () {return view('welcome');})->middleware('auth');
-    Method3: Route::group(['middleware' => 'auth'], function () {
-        Route::get('/', function () {
-        return view('welcome');
-        }) ;
-    });
- */
 Route::get('/', 'IndexController@index');
 
 Route::get('/home', 'IndexController@home');
@@ -32,13 +21,29 @@ Route::controller('auth', 'Auth\AuthController');
 Route::get('/articles/{id}/delete', 'ArticleController@destroy');
 
 Route::resource('articles', 'ArticleController');
+//下边两个是发表评论时用，用户没有登录时需要先登录然后跳转回文章页面（这里的{id}为article id
+Route::post('comments/{id}', 'CommentController@store');
 
-/*Route::get('/articles', 'ArticleController@index');
+Route::get('comments/{id}', function ($id) {
 
-Route::get('/articles/{id}', 'ArticleController@show');
+    return redirect('/articles/'.$id);
 
-Route::get('/articles/create', 'ArticleController@create');
+});
 
-Route::post('/articles','ArticleController@store');
+Route::resource('comments', 'CommentController');
 
-Route::get('/articles/{id}/edit', 'ArticleController@edit');*/
+Route::group(['prefix' => 'user'], function () {
+
+    Route::get('profile', 'UserController@profile');
+
+    Route::get('comments', 'UserController@comments');
+
+    Route::get('comments/delete/{id}', 'CommentController@destroy');
+
+    Route::get('comments/{id}', 'CommentController@edit');
+
+    Route::patch('comments/{id}', 'CommentController@update');
+
+    Route::get('articles', 'UserController@articles');
+
+});

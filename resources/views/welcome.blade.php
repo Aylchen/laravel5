@@ -4,6 +4,8 @@
         <title>Laravel</title>
 
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
         <style>
             .container {
                 text-align: center;
@@ -13,7 +15,7 @@
                 padding-top: 10%;
             }
             .navbar {
-                width: 70%;
+                width: 80%;
                 margin: 0 auto;
             }
         </style>

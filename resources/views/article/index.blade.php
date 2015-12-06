@@ -1,8 +1,7 @@
 @extends('main')
 @section('content')
-    <h1>文章列表&nbsp;&nbsp;
-        <a href="/articles/create" class="btn btn-info">新增文章</a>
-    </h1>
+    <h1 class="text-left">文章列表&nbsp;&nbsp;<a href="/articles/create" class="btn btn-info">新增文章</a></h1>
+    <hr/>
     <ul class="list-group">
         @foreach($articles as $article)
         <li class="list-group-item">

@@ -42,4 +42,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Article');
     }
+
+    protected function comments()
+    {
+        return $this->hasMany('App\Comment')->orderBy('created_at', 'desc');
+    }
 }

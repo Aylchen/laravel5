@@ -21,4 +21,8 @@ class Article extends Model
     protected function users(){
         return $this->belongsTo('App\User');
     }
+
+    protected function comments() {
+        return $this->hasMany('App\Comment', 'article_id', 'id')->orderBy('updated_at', 'desc');//article_id： foreign_key; id: local_key
+    }
 }

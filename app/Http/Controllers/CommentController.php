@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Article;
-use App\Comment;
+
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
-class UserController extends Controller
+class CommentController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth',['only' => ['profile', 'comments', 'articles']]);
+        $this->middleware('auth',['only' => ['store', 'edit']]);
     }
     /**
      * Display a listing of the resource.
@@ -21,28 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-
-    }
-
-
-    public function profile()
-    {
-        return view('user.profile');
-    }
-
-
-    public function comments()
-    {
-        $comments = Comment::where('user_id', '=', Auth::user()->id)->latest()->paginate(10);
-
-        return view('user.comments', compact('comments'));
-    }
-
-    public function articles()
-    {
-        $articles = Article::where('user_id', '=', Auth::user()->id)->latest()->paginate(10);
-
-        return view('article.index', compact('articles'));
+        return redirect( url ( 'user', 'comments'));
     }
 
     /**
@@ -63,7 +43,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'content' => 'required'
+        ]);
+        $input  = $request->all();
+        Comment::create(array_merge($input, ['user_id' => Auth::user()->id]));
+        return redirect( url ('articles', $input['article_id']) );
     }
 
     /**
@@ -85,7 +70,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        //检查用户是否有权限修改
+        $comment = Comment::findOrFail($id);
+
+        if(Gate::denies('updateOrDelete', $comment)) {
+            abort(403, "你没有权限编辑该条评论");
+        }
+
+
+        return view('comment.edit', compact('comment'));
     }
 
     /**
@@ -97,7 +90,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'content' => 'required'
+        ]);
+        Comment::find($id)->update($request->all()) ;
+        return redirect(url('user', 'comments'));
     }
 
     /**
@@ -108,6 +105,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        if(Gate::denies('updateOrDelete', $comment)) {
+            abort(403, "你没有权限删除该条评论");
+        }
+
+        if( $comment->delete() ) {
+            return redirect(url('user', 'comments'));
+        } else {
+            $msg = 'Delete Failed';
+            return view('errors.redirect', compact('msg'));
+        }
     }
 }

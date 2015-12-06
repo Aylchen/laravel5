@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Comment;
 use App\Http\Requests;
 use App\Article;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -65,9 +65,17 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        $article  = Article::findOrFail($id);
+        //如果要给comments添加分页，使用：//Comment::where('article_id', '=', $id)->latest()->paginate(20);在模板中{!! $comments->render() !!}
+        $comments = $article->comments;
+        $prev_id  = $this->getPrevArticleId($id);
+        $next_id  = $this->getNextArticleId($id);
+        return view('article.show', compact('article', 'comments', 'prev_id', 'next_id'));
+    }
 
-        return view('article.show', compact('article'));
+    public function gateShow()
+    {
+        echo "Here is a test message";
     }
 
     /**
@@ -79,7 +87,15 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find( $id );
-        $this->checkAccess( $article->user_id );
+
+        //use the 'edit_article' ability that defined in AuthServiceProvider
+
+        if(Gate::denies( 'update_delete_article', $article)) {
+
+            abort(403,'你没有权限执行当前edit操作');
+
+        }
+
         return view('article.edit', compact('article'));
     }
 
@@ -94,7 +110,7 @@ class ArticleController extends Controller
     {
         Article::find($id)->update($request->all());
 
-        return redirect('/articles');
+        return redirect( url( 'articles', $id));
     }
 
     /**
@@ -105,7 +121,17 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $this->checkAccess( Article::find($id) -> user_id );
+        $article = Article::findOrFail($id);
+
+        if(Gate::denies( 'update_delete_article', $article)) {
+
+            abort(403,'你没有权限执行当前delete操作');
+
+        }
+
+    /*use $this->authorize can also check the ability of the current user, Usage:
+
+        $this->authorize('update_delete_article', $article);*/
 
         if( Article::where("id",$id)->delete() ) {
             return redirect('/articles');
@@ -115,11 +141,14 @@ class ArticleController extends Controller
         }
     }
 
-    public function checkAccess( $user_id )
-    {
 
-        if( $user_id != Auth::user()->id ) {
-            die( "Access Denied" );
-        }
+    public function getPrevArticleId ($id)
+    {
+        return Article::where('id', '<', $id)->max('id');
+    }
+
+    public function getNextArticleId ($id)
+    {
+        return Article::where('id', '>', $id)->min('id');
     }
 }
