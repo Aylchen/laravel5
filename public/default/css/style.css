@@ -1,0 +1,44 @@
+.navbar, .content, footer {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.link-div {
+    margin-bottom: 1em;
+}
+.comment {
+    line-height: 3em;
+}
+
+.my-form-group {
+    float: left;
+    clear: both;
+}
+.my-form-group label, .my-form-group div {
+    float: left;
+}
+
+h1, h2, h3, h4,h5 {
+    text-align: center;
+}
+
+.pagination {
+    float: right;
+}
+
+footer {
+    padding:15px;
+    clear:both;
+}
+
+.absolute-btn {
+    position: absolute;
+    right: 2%;
+    top: 35%;
+}
+
+footer {
+    height: 3em;
+    border-top : 1px solid #ddd;
+    margin-top : 20px;
+}
