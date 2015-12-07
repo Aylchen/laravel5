@@ -745,11 +745,31 @@ if (! function_exists('view')) {
 
 if(! function_exists('theme_view')) {
     /**
+     * return the current theme name
+     *
      * return current theme
      * @return mixed|string
      */
     function theme_view()
     {
-        return (!config('app.theme') || config('app.theme')=='default') ? "default" : config('app.theme');
+        return (! config('app.theme')) ? "default" : config('app.theme');
+    }
+}
+
+
+if(! function_exists('is_public')) {
+    /**
+     * judge if the template is of the public's
+     *
+     * @param $expression
+     * @return bool
+     */
+    function is_public($expression)
+    {
+        if (Str::contains($expression, 'true')) {
+            return true;
+        }
+
+        return false;
     }
 }

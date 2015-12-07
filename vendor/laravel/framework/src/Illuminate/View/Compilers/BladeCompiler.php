@@ -696,7 +696,16 @@ class BladeCompiler extends Compiler implements CompilerInterface
             $expression = substr($expression, 1, -1);
         }
 
-        $data = "<?php echo \$__env->make(theme_view().'.'.$expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        if (is_public($expression)) {
+
+            $expression = $this->_expression($expression);
+
+            $data = "<?php echo \$__env->make($expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+
+        } else {
+
+            $data = "<?php echo \$__env->make(theme_view().'.'.$expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        }
 
         $this->footer[] = $data;
 
@@ -715,7 +724,22 @@ class BladeCompiler extends Compiler implements CompilerInterface
             $expression = substr($expression, 1, -1);
         }
 
+        if (is_public($expression)) {
+
+            $expression = $this->_expression($expression);
+
+            return "<?php echo \$__env->make($expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        }
+
         return "<?php echo \$__env->make(theme_view().'.'.$expression, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+    }
+
+    private function _expression ($expression)
+    {
+        $tmp_array  = explode(',', $expression);
+
+        return "'public.". substr($tmp_array[0],1);
+
     }
 
     /**

@@ -10,5 +10,26 @@
 
 在HtmlBuilder中添加了theme_script和theme_style两个方法，可以在原来的写法上将theme作前置加上
 
-//要做
 不同主题公共模板和样式的使用
+
+==========================
+样式
+==========================
+1/ 公共样式 template 中使用 {!! Html::script|style('') !!}
+    public/css/*
+    public/js/*
+2/ 主题样式   template 中使用 {!! Html::theme_script|theme_style('') !!}
+    public/themeName/css/*
+    public/themeName/js/*
+
+==========================
+模板
+==========================
+1/ 公共模板
+在模板的@include 和 @extends中都可接受第二个参数：true|false, 与第一个参数以, 隔开
+    Usage: @include('<templateName>', true) | @extends('<templateName>', true)
+
+默认false，使用的是当前主题下的模板
+如为true, 则默认使用公共模板 views/public/
+
+So the theme name can't be named as public

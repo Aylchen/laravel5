@@ -87,6 +87,9 @@ return [
     | Application Theme
     |--------------------------------------------------------------------------
     |
+    | Theme Name Can't be named as 'public', because within resources/views/
+    | public/ is the common templates for all the themes
+    |
     */
 
     'theme' => 'default',

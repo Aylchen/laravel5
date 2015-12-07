@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Laravel</title>
+    <title>Laravel From Public</title>
     {!! Html::style('/css/bootstrap.min.css') !!}
     {!! Html::theme_style('/css/style.css') !!}
     {!! Html::script('/js/jquery.min.js') !!}
