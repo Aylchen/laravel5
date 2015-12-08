@@ -1,0 +1,15 @@
+Event / Listener
+
+
+1) Event 注册在EventServiceProvider中$listen数组注册
+2) 使用命令： php artisan event:generate可生成$listen数组中的event和listen文件
+/** _________________________________
+*  | 在EventServiceProvider的boot方法中声明
+*  |$events->listen('event.name', function ($foo, $bar) {
+*  |         //
+*  |  });
+*  |
+*  |
+*  |
+*  |
+*/

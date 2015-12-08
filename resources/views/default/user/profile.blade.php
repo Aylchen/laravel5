@@ -2,8 +2,7 @@
 
 @section('content')
 
-    <h1 class="text-left">User Profile</h1>
-
+    <h1 class="text-left">我的信息</h1>
     <hr/>
     <div class="my-form-group">
         <label>用户名：</label>
@@ -17,5 +16,4 @@
         <label>创建时间：</label>
         <div class="text-left">{{ Auth::user()->created_at }}</div>
     </div>
-
 @endsection

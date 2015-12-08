@@ -5,7 +5,7 @@
         <div class="pull-left">
             <a href="javascript:history.back();"> <<&nbsp;返回 </a>
         </div>
-        @if( $article->user_id == Auth::user()->id)
+        @if( ! empty(Auth::user()) && ( $article->user_id == Auth::user()->id ) )
         <div class="pull-right">
             <a href="{{ url('articles', [$article->id, 'edit']) }} " class="btn btn-primary">Edit</a>
             <a href="{{ url('articles', [$article->id, 'delete']) }}" class="btn btn-danger">Delete</a>
@@ -14,8 +14,7 @@
         <div class="page-header">
             <h3>{{ $article->title }}</h3>
         </div>
-        <p>{{ $article->content }}</p>
-
+        <pre>{{ $article->content }}</pre>
     </Article>
     <hr/>
     <div class="link-div">
@@ -60,15 +59,3 @@
         </ul>
     </comments>
 @endsection
-
-<script>
-/*    $(function() {
-        $('.comment-list').on('click', '.pagination a', function (e) {
-            var url = $(this).attr('href');
-            $(".comment-list").load(url+" .comment-list");
-            return false;
-        });
-    });*/
-
-</script>
-

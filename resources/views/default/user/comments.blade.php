@@ -12,7 +12,7 @@
                 <li class="list-group-item" style="position:relative;">
                     <div class="comment-user">
                         <h5 class="text-left">
-                            <a href="{{ url('articles', $comment->article->id) }}">{{ $comment->article->title }}</a>
+                            <a href="{{ url('articles', $comment->article_id) }}">{{ $comment->article->title }}</a>
                         </h5>
                         <small class="text-warning">{{ $comment->updated_at }}</small>
                     </div>

@@ -1,27 +1,71 @@
-## Laravel PHP Framework
+====================================================================================
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Blog目前的一些功能详解：
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+1) 用户登录与注册
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+2) 文章的显示/新增/编辑/删除
+    a) 用户不等录可查看文章
+    b) 新增/编辑/删除文章必须在用户登录的情况下方可操作；
+    c) 编辑/删除闻着那该加入了权限功能；只有文章的发布者方可对该文章进行编辑和删除操作
 
-## Official Documentation
+3) 文章评论功能
+    a) 只有登录用户方可评论文章
+    b) 评论的编辑和删除功能加入权限功能：只有当前评论的发布者方可对该评论进行编辑和删除；
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+4) 用户中心
+    a) 我发布的文章
+        可对自己发布的文章进行编辑和删除
+    b) 我发布的评论
+        可对自己发布的评论进行编辑和删除
+    c) 我的基本信息
 
-## Contributing
+5) 主题切换功能
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+======================================================================================
 
-## Security Vulnerabilities
+关于Theme切换的说明:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+a) 主题的使用：
 
-### License
+    1) 默认主题为default；
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+    2) 更改主题只需要修改config/app.php中的theme即可
+
+    3) 主题的切换包括模板的切换和样式的切换
+
+        模板包括当前主题模板及公共模板（所有主题可共用，如：views/errors/404.blade.php）
+        样式包括当前主题样式及公共样式( 所有主题可共用，public/css/* public/js/* 等)
+
+b) 主题功能修改
+
+    1) 修改了helpers.php下view方法，将主题添加为前置
+
+    2) 修改View/Compiler/BladeCompiler.php中两个方法：compileExtends / compileInclude
+
+    3) 添加样式的变化
+
+       在HtmlBuilder中添加了theme_script和theme_style两个方法，可以在原来的写法上将theme作前置加上
+
+    4) 不同主题公共模板和样式的使用
+
+        ***********样式************
+
+        1) 公共样式 template 中使用 @{!! Html::script|style('') !!}
+            public/css/*
+            public/js/*
+
+        2) 主题样式   template 中使用 @{!! Html::theme_script|theme_style('') !!}
+            public/themeName/css/*
+            public/themeName/js/*
+
+        ***********模板************
+
+        1) 公共模板
+        在模板的<code>@ include</code> 和 <code>@ extends</code>中都可接受第二个参数：true|false, 与第一个参数以, 隔开
+        用法: <code>@ include('<templateName>', true)</code> | <code>@ extends('<templateName>', true)</code>
+
+        默认false，使用的是当前主题下的模板
+        如为true, 则默认使用公共模板 views/public/
+
+        2) 主题不能命名为public

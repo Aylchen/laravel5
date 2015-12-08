@@ -14,7 +14,6 @@
     <div class="content">
         @yield('content')
     </div>
-    <hr/>
     <footer>
         <p class="text-center">&copy;<em>Aylchen</em></p>
     </footer>

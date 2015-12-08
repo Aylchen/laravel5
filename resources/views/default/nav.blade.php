@@ -21,9 +21,9 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('user', 'profile') }}">Account Info</a></li>
-                        <li><a href="{{ url('user', 'comments') }}">Comment List</a></li>
-                        <li><a href="{{ url('user', 'articles') }}">Articles</a></li>
+                        <li><a href="{{ url('user', 'profile') }}">My Profile</a></li>
+                        <li><a href="{{ url('user', 'comments') }}">My Comments</a></li>
+                        <li><a href="{{ url('user', 'articles') }}">My Articles</a></li>
                         <li class="divider"></li>
                         <li><a href="{{ url('auth', 'logout') }}">Logout</a></li>
                     </ul>
