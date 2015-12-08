@@ -5,7 +5,7 @@
         <div class="pull-left">
             <a href="javascript:history.back();"> <<&nbsp;返回 </a>
         </div>
-        @if( ! empty(Auth::user()) && ( $article->user_id == Auth::user()->id ) )
+        @if( $article->user_id == Auth::user()->id)
         <div class="pull-right">
             <a href="{{ url('articles', [$article->id, 'edit']) }} " class="btn btn-primary">Edit</a>
             <a href="{{ url('articles', [$article->id, 'delete']) }}" class="btn btn-danger">Delete</a>
@@ -15,6 +15,7 @@
             <h3>{{ $article->title }}</h3>
         </div>
         <pre>{{ $article->content }}</pre>
+
     </Article>
     <hr/>
     <div class="link-div">
@@ -47,7 +48,7 @@
             @foreach($comments as $comment)
                 <li class="list-group-item">
                     <div class="comment-user">
-                        <small class="text-primary">{{ $comment->user->updated_at }}</small>
+                        <small class="text-primary">{{ $comment->created_at }}</small>
                         &nbsp;&nbsp;<strong>{{ $comment->user->username }}</strong>
                     </div>
                     <div class="comment-content">
@@ -59,3 +60,15 @@
         </ul>
     </comments>
 @endsection
+
+<script>
+/*    $(function() {
+        $('.comment-list').on('click', '.pagination a', function (e) {
+            var url = $(this).attr('href');
+            $(".comment-list").load(url+" .comment-list");
+            return false;
+        });
+    });*/
+
+</script>
+

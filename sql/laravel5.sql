@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 05, 2015 at 07:48 PM
--- Server version: 5.6.27-0ubuntu0.14.04.1
+-- Generation Time: Dec 08, 2015 at 05:11 PM
+-- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `laravel5-cyl`
+-- Database: `laravel5`
 --
 
 -- --------------------------------------------------------
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `comments`
@@ -91,16 +91,15 @@ INSERT INTO `comments` (`id`, `content`, `article_id`, `user_id`, `created_at`, 
 (17, '每个都要评论一遍', 1, 2, '2015-12-05 10:02:53', '2015-12-05 10:02:53'),
 (18, '每个都要评论一遍', 1, 2, '2015-12-05 10:02:54', '2015-12-05 10:02:54'),
 (19, '每个都要评论一遍', 1, 2, '2015-12-05 10:02:56', '2015-12-05 10:02:56'),
-(25, '每个都要评论一遍asdfasdf234234', 1, 2, '2015-12-05 10:03:03', '2015-12-05 11:25:38'),
-(26, '每个都要评论一遍23423432dasdf', 1, 2, '2015-12-05 10:03:05', '2015-12-05 11:25:28'),
-(27, '每个都要评论一遍asdfasadf', 1, 2, '2015-12-05 10:03:06', '2015-12-05 11:25:20'),
+(27, '每个都要评论一遍', 1, 2, '2015-12-05 10:03:06', '2015-12-07 07:04:24'),
 (28, '$this->validate($request, [\r\n            ''content'' => ''required''\r\n        ]);', 1, 2, '2015-12-05 10:03:07', '2015-12-05 11:24:58'),
 (29, 'AAA', 5, 1, '2015-12-05 11:35:54', '2015-12-05 11:35:54'),
 (30, '45685479849684哭国际化国际化规范化\r\n', 4, 1, '2015-12-05 11:40:54', '2015-12-05 11:46:09'),
 (31, '我也评论！！！132', 1, 1, '2015-12-05 11:43:27', '2015-12-05 11:43:37'),
 (32, '撒发发艾弗森打', 5, 1, '2015-12-05 11:46:22', '2015-12-05 11:46:22'),
 (33, '额', 4, 1, '2015-12-05 11:46:38', '2015-12-05 11:46:38'),
-(34, '爱上地方撒发', 7, 1, '2015-12-05 11:46:53', '2015-12-05 11:46:53');
+(34, '爱上地方撒发', 7, 1, '2015-12-05 11:46:53', '2015-12-05 11:46:53'),
+(36, 'Say Something', 6, 2, '2015-12-08 01:15:05', '2015-12-08 01:15:05');
 
 -- --------------------------------------------------------
 
@@ -162,8 +161,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Aylchen', '1028152157@qq.com', '$2y$10$xb3wucw54QaZWdumvtKCl.8hzogfp/QKZ8Q6Z4Y6nH4jNQ6sdPFha', 'QZjVCuwCAfY4aK3vnP5OMEPRPeY9GfQnmanebyvn7Vpwb65ZKCeo2u5FeAjr', '2015-12-05 01:28:49', '2015-12-05 10:58:28'),
-(2, 'sf', '491136046@qq.com', '$2y$10$ix/983aed/ipChjyBx/tSOaLdGzFQbsItRg5QeoFtWGZ3mVA9bIGy', 'S4DJ7gel1BzQhuIz2Q6mvkjUfelgOiAVsybRHEIg2JeGtuw2EECEHAzpoGgb', '2015-12-05 01:32:06', '2015-12-05 11:35:27');
+(1, 'Aylchen', '1028152157@qq.com', '$2y$10$xb3wucw54QaZWdumvtKCl.8hzogfp/QKZ8Q6Z4Y6nH4jNQ6sdPFha', 'MHOOLVOg0U3ZhIozK5QeMEYI1F5xU4OM8HFwT0YhKeh5r0QpUlUf2qmyqaUN', '2015-12-05 01:28:49', '2015-12-08 08:44:51'),
+(2, 'sf', '491136046@qq.com', '$2y$10$ix/983aed/ipChjyBx/tSOaLdGzFQbsItRg5QeoFtWGZ3mVA9bIGy', 'beYRBFAxN0wPQSjJvV9v1Syu1kcRq90SkihoORJXYskXiwJ5ueL0oI5xx1mP', '2015-12-05 01:32:06', '2015-12-08 08:07:29');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
