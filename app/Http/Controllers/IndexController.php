@@ -31,6 +31,7 @@ class IndexController extends Controller
      */
     public function create()
     {
+        return "123";
     }
 
     /**
