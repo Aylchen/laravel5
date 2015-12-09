@@ -12,7 +12,6 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth',['only' => ['profile', 'comments', 'articles']]);
     }
     /**
      * Display a listing of the resource.

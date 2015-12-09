@@ -32,7 +32,7 @@ Route::get('comments/{id}', function ($id) {
 
 Route::resource('comments', 'CommentController');
 
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
 
     Route::get('profile', 'UserController@profile');
 
