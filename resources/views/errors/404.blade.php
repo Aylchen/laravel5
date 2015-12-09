@@ -61,6 +61,6 @@
 
     <p class="error">404 Not Found</p><p class="funny">No Coffee, No Workee!</p>
 
-    <p><a href="/" title="Back on track trooper!">Go Home</a></p>
+    <p><a href="{{ URL::previous() }}" title="Back to the previous page">Go Back</a></p>
 </body>
 </html>
