@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdminsTable extends Migration
+class AddColumnIntoPermission extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class CreateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function($table)
-        {
-            $table->increments('id');
-            $table->string('username', 100)->unique();
-            $table->string('password', 128);
-            $table->timestamps();
+        Schema::table('permissions', function ($table) {
+            $table->string('permission_name');
         });
     }
 

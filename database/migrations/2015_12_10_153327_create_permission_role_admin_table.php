@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermissionRolesUserTable extends Migration
+class CreatePermissionRoleAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -30,13 +30,13 @@ class CreatePermissionRolesUserTable extends Migration
             $table->primary(['permission_id', 'role_id']);
         });
 
-        Schema::create('role_user', function (BluePrint $table) {
+        Schema::create('admin_role', function (BluePrint $table) {
 
-            $table->integer('user_id')->unsigned();
+            $table->integer('admin_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
 
-            $table->foreign('user_id')
+            $table->foreign('admin_id')
                 ->references('id')
                 ->on('admins')
                 ->onDelete('cascade');
@@ -46,10 +46,9 @@ class CreatePermissionRolesUserTable extends Migration
                 ->on('roles')
                 ->onDelete('cascade');
 
-            $table->primary(['user_id', 'role_id']);
+            $table->primary(['admin_id', 'role_id']);
         });
-}
-
+    }
 
     /**
      * Reverse the migrations.

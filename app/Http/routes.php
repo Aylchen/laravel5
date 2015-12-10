@@ -48,12 +48,14 @@ Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
 
 });
 
+Route::get('/admin/login', 'AdminController@login');
+
+Route::post('/admin/login', 'AdminController@doLogin');
+
+Route::get('/admin/logout', 'AdminController@doLogout');
 
 Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
-    Route::get('/', function () {
-
-        return "This is admin index";
-    });
+    Route::get('/', 'AdminController@index');
 
 });

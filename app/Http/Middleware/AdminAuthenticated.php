@@ -16,11 +16,15 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next)
     {
-//此处判断权限，在此之前需要先搞定多用户表身份认证的问题
 
-  /*      config('auth.model') =  App\Admin::class;
+        //step1 checkout if the administrator logged in
 
-        config('auth.table') = 'admins';*/
+        if(! session(config('app.admin_session'))) {
+            return redirect( url('admin', 'login') );
+        }
+
+        //判断权限
+
 
         return $next($request);
     }

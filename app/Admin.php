@@ -10,8 +10,29 @@ class Admin extends Model
 
     protected $fillable = ['username', 'password'];
 
-    protected $hidden   = ['password', 'remember_token'];
+    protected $hidden   = ['password'];
 
 
+    protected function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+
+
+
+    protected static function user ()
+    {
+
+        if( session(config('app.admin_session')) ) {
+
+            return  Admin::where('username', session( config('app.admin_session')  ))->first();
+
+        } else {
+
+            return redirect('/admin');
+
+        }
+    }
 
 }
