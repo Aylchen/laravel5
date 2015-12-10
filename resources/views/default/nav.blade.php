@@ -3,6 +3,7 @@
         <ul class="nav navbar-nav navbar-left">
             <li><a href="/">Home</a></li>
             <li><a href="{{ url('articles') }}">Articles</a></li>
+            <li><a href="/admin">Admin</a></li>
         </ul>
         <!--向右对齐-->
         <ul class="nav navbar-nav navbar-right">

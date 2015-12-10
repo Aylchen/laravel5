@@ -47,3 +47,13 @@ Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
     Route::get('articles', 'UserController@articles');
 
 });
+
+
+Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
+
+    Route::get('/', function () {
+
+        return "This is admin index";
+    });
+
+});
