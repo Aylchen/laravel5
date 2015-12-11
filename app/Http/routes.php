@@ -54,8 +54,59 @@ Route::post('/admin/login', 'AdminController@doLogin');
 
 Route::get('/admin/logout', 'AdminController@doLogout');
 
+
+
+
+
+
 Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
-    Route::get('/', 'AdminController@index');
+    Route::get('/', 'AdminController@index' );
+
+
+    Route::group(['prefix' => 'permissions'], function () {
+
+        Route::get('/', 'AdminController@permissions');
+
+        Route::post('delete', 'AdminController@permission_delete');
+
+        Route::post('edit', 'AdminController@permission_edit');
+    });
+
+    Route::group(['prefix' => 'roles'], function () {
+
+        Route::get('/', 'AdminController@roles');
+
+        Route::post('delete', 'AdminController@role_delete');
+
+        Route::post('edit', 'AdminController@role_edit');
+    });
+
+    Route::group(['prefix' => 'administrators'], function () {
+
+        Route::get('/', 'AdminController@administrators');
+
+        Route::post('delete', 'AdminController@administrator_delete');
+
+        Route::post('edit', 'AdminController@administrator_edit');
+    });
+
+
+    Route::group(['prefix' => 'users'], function () {
+
+        Route::get('/', 'AdminController@users');
+
+        Route::post('delete', 'AdminController@user_delete');
+
+        Route::post('edit', 'AdminController@user_edit');
+    });
+
+
+
+
+    Route::get('/articles', 'AdminController@articles');
+
+    Route::get('/comments', 'AdminController@comments');
+
 
 });

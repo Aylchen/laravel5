@@ -14,4 +14,9 @@ class Role extends Model
     {
         return $this->belongsToMany('App\Permission');
     }
+
+    protected function admins()
+    {
+        return $this->belongsToMany('App\Admin');
+    }
 }

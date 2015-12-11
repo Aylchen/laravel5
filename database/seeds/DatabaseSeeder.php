@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,15 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Model::unguard();
 
+        $this->call(InsertPermissionsSeeder::class);
 
-        \App\Role::create(
-            array (  'role' => '普通管理员'   )
-        );
+        Model::reguard();
 
-        \App\Permission::create(
-            array ( 'permission' => 'admin/check')
-
-        );
     }
 }

@@ -4,16 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>laravel blog后台管理系统</title>
+    <meta name="_token" content="{{ csrf_token() }}"/>
     <meta name="description" content="laravel blog Description">
     <meta name="keywords" content="table">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="renderer" content="webkit">
+    <meta name="renderer" content="webkit">{{--
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="icon" type="image/png" href="assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">--}}
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <link rel="stylesheet" href="assets/css/amazeui.min.css"  />
-    <link rel="stylesheet" href="assets/css/admin.css" />
+    {!! Html::style('/assets/css/amazeui.min.css') !!}
+    {!! Html::style('/assets/css/admin.css') !!}
+    {!! Html::script("/js/jquery.min.js") !!}
+    {!! Html::script("/assets/js/amazeui.min.js") !!}
+    {!! Html::script("/assets/js/app.js") !!}
 
 </head>
 <body>
@@ -46,17 +50,18 @@
 
 <div class="am-cf admin-main">
     @include('amazeui.sidebar')
-
     <div class="admin-content">
+        <div class="am-cf am-padding">
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">{{ $nav }}</strong> {{--/ <small>Table</small>--}}</div>
+            @if(!empty($with_add) && $with_add = true)
+                <button type="button" class="am-btn am-btn-primary am-align-right edit-one add-true" >添加</button>
+            @endif
+        </div>
+
         @yield('content')
     </div>
-
 </div>
 
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="/js/jquery.min.js"></script>
-<!--<![endif]-->
-<script src="/assets/js/amazeui.min.js"></script>
-<script src="/assets/js/app.js"></script>
+
 </body>
 </html>
