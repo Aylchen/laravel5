@@ -31,6 +31,7 @@ class AdminAuthenticated
 
         $permissions    = array() ;
         $my_permissions = array();
+        $temp           = array();
 
         $user           = Admin::user();
         if( $user ) {
@@ -45,12 +46,16 @@ class AdminAuthenticated
                         $nav = $permission->permission_name;
                     }
                     if( $permission->is_show == 1) { //通过is_show字段来取得左侧导航菜单 ==1显示
-
+                        if(in_array($permission->permission_name, $temp)) {
+                            //多角色用户如果权限重复,则去除
+                            continue;
+                        }
                         $permissions[] =
                             array(
                                 'url' => substr($permission->permission,6),
                                 'permission_name' => $permission->permission_name
                             );
+                        $temp[] = $permission->permission_name;
                     }
 
                     $my_permissions[] = $permission->permission ;
@@ -66,7 +71,6 @@ class AdminAuthenticated
 
         view()->share('nav', $nav);
         view()->share('permissions', $permissions);
-
 
         return $next($request);
     }

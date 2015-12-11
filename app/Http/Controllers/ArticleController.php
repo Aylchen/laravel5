@@ -136,6 +136,9 @@ class ArticleController extends Controller
         $this->authorize('update_delete_article', $article);*/
 
         if( Article::where("id",$id)->delete() ) {
+
+            Comment::where("article_id", $id)->delete();
+
             return redirect('/articles');
         } else {
             $msg = 'Delete Failed';

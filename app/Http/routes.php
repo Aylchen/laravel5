@@ -98,13 +98,16 @@ Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
         Route::post('delete', 'AdminController@user_delete');
 
-        Route::post('edit', 'AdminController@user_edit');
     });
 
+    Route::group(['prefix' => 'articles'], function () {
 
+        Route::get('/', 'AdminController@articles');
 
+        Route::post('delete', 'AdminController@article_delete');
 
-    Route::get('/articles', 'AdminController@articles');
+    });
+
 
     Route::get('/comments', 'AdminController@comments');
 

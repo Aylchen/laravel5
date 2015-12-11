@@ -15,6 +15,7 @@
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     {!! Html::style('/assets/css/amazeui.min.css') !!}
     {!! Html::style('/assets/css/admin.css') !!}
+    {!! Html::style('/css/bootstrap.min.css') !!}
     {!! Html::script("/js/jquery.min.js") !!}
     {!! Html::script("/assets/js/amazeui.min.js") !!}
     {!! Html::script("/assets/js/app.js") !!}

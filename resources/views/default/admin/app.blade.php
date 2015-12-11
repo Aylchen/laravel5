@@ -7,7 +7,6 @@
     <title>Laravel</title>
     {!! Html::style('/css/amazeui.min.css') !!}
     {!! Html::style('/css/app.css') !!}
-
 </head>
 <body>
 <nav class="navbar navbar-default">

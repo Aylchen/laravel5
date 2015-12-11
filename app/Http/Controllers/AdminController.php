@@ -7,6 +7,8 @@ use App\AdminRole;
 use App\Permission;
 use App\PermissionRole;
 use App\Role;
+use App\User;
+use App\Article;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -146,8 +148,6 @@ class AdminController extends Controller
 
     public function administrator_edit(Request $request)
     {
-
-        $this->validate($request, array('username'=>'required'));
         $roles = array_filter(explode(',', $request->input('roles')));
 
         if(! $request->input('id')) {
@@ -190,23 +190,36 @@ class AdminController extends Controller
 
     public function users()
     {
-        return view('admin.index');
+        $all_users = User::all();
+
+        return view('admin.users', compact('all_users'));
+    }
+
+    public function user_delete(Request $request)
+    {
+        User::where("id", $request->input('delete_id'))->delete();
+
+        return redirect()->back();
     }
 
     public function articles()
     {
-        return view('admin.index');
+        $all_articles = Article::latest()-> paginate(10);
+
+        return view('admin.articles', compact('all_articles'));
     }
 
+    public function article_delete(Request $request)
+    {
+        Article::where("id", $request->input('delete_id'))->delete();
+
+        return redirect()->back();
+    }
     public function comments()
     {
         return view('admin.index');
     }
-    
-    
-    
-    
-    
+
 
     public function login ()
     {

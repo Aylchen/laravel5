@@ -89,7 +89,7 @@
                         <label class="am-checkbox-inline">
                             <input type="checkbox" value="{{ $one_role->id }}"  data-am-ucheck
                                    data-accept="@foreach($one_role->admins as $admin)|{{ $admin->id }}|@endforeach">
-                            {{ $one_role->role }}{{ $one_role->id }}
+                            {{ $one_role->role }}
                         </label>
                     @endforeach
                 </div>
