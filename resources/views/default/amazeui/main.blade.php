@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">{{--
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">--}}
+    <link rel="icon" type="image/png" href="/images/favicon.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     {!! Html::style('/assets/css/amazeui.min.css') !!}
     {!! Html::style('/assets/css/admin.css') !!}
@@ -51,7 +51,7 @@
 
 <div class="am-cf admin-main">
     @include('amazeui.sidebar')
-    <div class="admin-content">
+    <div class="admin-content" style="min-height:800px;">
         <div class="am-cf am-padding">
             <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">{{ $nav }}</strong> {{--/ <small>Table</small>--}}</div>
             @if(!empty($with_add) && $with_add = true)
@@ -59,10 +59,54 @@
             @endif
         </div>
 
-        @yield('content')
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                @yield('content_table')
+            </div>
+            @if(! empty($current_form))
+            {!! Form::open(['url'=> url('admin',[$current_form,'delete']), 'id' => $current_form.'_form']) !!}
+            {!! Form::hidden('delete_id', null, ['id' => 'opera_id']) !!}
+            {!! Form::close() !!}
+
+            <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+                <div class="am-modal-dialog">
+                    <div class="am-modal-bd">
+                        你确定要删除这条记录吗？
+                    </div>
+                    <div class="am-modal-footer">
+                        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                        <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                    </div>
+                </div>
+            </div>
+
+            {{--</div>--}}
+            <script>
+                $(function() {
+                    $('.btn-delete').on('click', function() {
+                        $('#my-confirm').modal({
+                            relatedTarget: this,
+                            onConfirm: function() {
+                                var $link = $(this.relatedTarget);
+                                $("#opera_id").val($link.data('id'));
+                                $("#{{$current_form }}_form").submit();
+                            }
+                        });
+                    });
+                });
+            </script>
+            @endif
+        </div>
+
     </div>
 </div>
 
-
+<footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }">
+    <div class="am-footer-miscs ">
+        <p>模板来自<a href="javascript:void(0)" title="amazeui" target="_blank" class="">amazeui</a></p>
+        <p>CopyRight©Aylchen.</p>
+    </div>
+</footer>
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use App\AdminRole;
+use App\Comment;
 use App\Permission;
 use App\PermissionRole;
 use App\Role;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller
@@ -37,7 +39,9 @@ class AdminController extends Controller
 
         $with_add        = true;
 
-        return view('admin.permissions', compact('all_permissions', 'with_add'));
+        $current_form    = 'permissions';
+
+        return view('admin.permissions', compact('all_permissions', 'with_add', 'current_form'));
     }
 
     public function permission_delete(Request $request)
@@ -57,6 +61,15 @@ class AdminController extends Controller
         //根据$request->input('id')判断是create还是update
 
         if(! $request->input('id')) {
+
+            if( Permission::where('permission', $request->input('permission'))->first() ) {
+                return redirect()->back()->withErrors('该路由已存在！');
+            }
+
+            if( Permission::where('permission_name', $request->input('permission_name'))->first() ) {
+                return redirect()->back()->withErrors('该路由名称已存在！');
+            }
+
             $lastInsert = Permission::create($request->all());
             PermissionRole::create(array(
                'permission_id' => $lastInsert->id,
@@ -77,7 +90,9 @@ class AdminController extends Controller
 
         $with_add        = true;
 
-        return view('admin.roles', compact('all_roles', 'with_add', 'all_permissions'));
+        $current_form    = 'roles';
+
+        return view('admin.roles', compact('all_roles', 'with_add', 'all_permissions', 'current_form'));
     }
 
     public function role_delete(Request $request)
@@ -99,6 +114,11 @@ class AdminController extends Controller
         $permissions = array_filter(explode(',', $request->input('permissions')));
 
         if(! $request->input('id')) {
+
+            if(Role::where('role', $request->input('role'))->first() ) {
+                return redirect()->back()->withErrors('该角色已存在！');
+            }
+
             $lastInsert = Role::create($request->all());
 
             $insertRoleId =  $lastInsert->id;
@@ -129,13 +149,15 @@ class AdminController extends Controller
 
     public function administrators()
     {
-        $all_admins = Admin::all();
+        $all_admins      = Admin::all();
 
-        $all_roles  = Role::all();
+        $all_roles       = Role::all();
 
         $with_add        = true;
 
-        return view('admin.administrators', compact('all_admins','with_add', 'all_roles'));
+        $current_form    = 'administrators';
+
+        return view('admin.administrators', compact('all_admins','with_add', 'all_roles', 'current_form'));
     }
 
     public function administrator_delete(Request $request)
@@ -151,6 +173,13 @@ class AdminController extends Controller
         $roles = array_filter(explode(',', $request->input('roles')));
 
         if(! $request->input('id')) {
+
+            //check if the username has already exists
+
+            if( Admin::where('username', $request->input('username'))->first() ) {
+                return redirect()->back()->withErrors('该用户名已存在！');
+            }
+
 
             $lastInsert = Admin::create(
                 array(
@@ -191,8 +220,8 @@ class AdminController extends Controller
     public function users()
     {
         $all_users = User::all();
-
-        return view('admin.users', compact('all_users'));
+        $current_form = 'users';
+        return view('admin.users', compact('all_users', 'current_form'));
     }
 
     public function user_delete(Request $request)
@@ -205,19 +234,32 @@ class AdminController extends Controller
     public function articles()
     {
         $all_articles = Article::latest()-> paginate(10);
-
-        return view('admin.articles', compact('all_articles'));
+        $current_form = 'articles';
+        return view('admin.articles', compact('all_articles', 'current_form'));
     }
 
     public function article_delete(Request $request)
     {
         Article::where("id", $request->input('delete_id'))->delete();
-
+//at the same time, delete all the comments of the articles
+        Comment::where("article_id", $request->input('delete_id'))->delete();
         return redirect()->back();
     }
+
     public function comments()
     {
-        return view('admin.index');
+        $all_comments  = Comment::latest()->paginate(10);
+
+        $current_form = 'comments';
+
+        return view('admin.comments', compact('all_comments', 'current_form'));
+    }
+
+    public function comment_delete(Request $request)
+    {
+        Comment::where('id', $request->input('delete_id'))->delete();
+
+        return redirect()->back();
     }
 
 
@@ -263,7 +305,7 @@ class AdminController extends Controller
             }
         }
 
-        return view('admin.login', compact('error_msg'));
+        return redirect()->back()->withErrors($error_msg);
     }
 
     public function doLogout ( )

@@ -1,11 +1,9 @@
 @extends('amazeui.main')
 
-@section('content')
-        <!-- content start -->
-<div class="am-g">
-    <div class="am-u-sm-12">
+@section('content_table')
         <table class="am-table am-table-striped am-table-hover table-main">
             <thead>
+            <tr><th colspan="10"> @include('error')</th> </tr>
             <tr>
                 <th class="table-id">ID</th>
                 <th class="table-title">用户名</th>
@@ -42,82 +40,56 @@
             @endforeach
             </tbody>
         </table>
-        {!! Form::open(['url'=> url('admin',['administrators','delete']), 'id' => 'admin_form']) !!}
-        {!! Form::hidden('delete_id', null, ['id' => 'opera_id']) !!}
-        {!! Form::close() !!}
-    </div>
 
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-        <div class="am-modal-dialog">
-            <div class="am-modal-bd">
-                你确定要删除这条记录吗？
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
-            </div>
+
+        <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_form_modal">
+            {!! Form::open(['url'=> url('admin',['administrators','edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
+            <fieldset>
+                <h5>&nbsp;</h5>
+                <div class="am-form-group">
+                    {!! Form::label('username', "用户名", ['class' => 'am-u-sm-3']) !!}
+                    <div class="am-u-sm-9">
+                        {!! Form::text('username', null, ['required' => 'required']) !!}
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    {!! Form::label('password', "密码", ['class' => 'am-u-sm-3']) !!}
+                    <div class="am-u-sm-9">
+                        {!! Form::password('password', ['required' => 'required']) !!}
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    {!! Form::label('password_confirmation', "确认密码", ['class' => 'am-u-sm-3']) !!}
+                    <div class="am-u-sm-9">
+                        {!! Form::password('password_confirmation', ['required' => 'required']) !!}
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    {!! Form::label('role', "所属分组", ['class' => 'am-u-sm-3']) !!}
+                    <div class="am-u-sm-9">
+
+                        @foreach($all_roles as $one_role)
+                            <label class="am-checkbox-inline">
+                                <input type="checkbox" value="{{ $one_role->id }}"  data-am-ucheck
+                                       data-accept="@foreach($one_role->admins as $admin)-{{ $admin->id }}-@endforeach">
+                                {{ $one_role->role }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+                {!! Form::hidden('id') !!}
+                {!! Form::hidden('roles') !!}
+                <div class="am-form-group am-modal-footer">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="submit-btn am-btn">确定</span>
+                </div>
+
+            </fieldset>
+            {!! Form::close() !!}
         </div>
-    </div>
-
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_form_modal">
-        {!! Form::open(['url'=> url('admin',['administrators','edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
-        <fieldset>
-            <h5>&nbsp;</h5>
-            <div class="am-form-group">
-                {!! Form::label('username', "用户名", ['class' => 'am-u-sm-3']) !!}
-                <div class="am-u-sm-9">
-                    {!! Form::text('username', null, ['required' => 'required']) !!}
-                </div>
-            </div>
-            <div class="am-form-group">
-                {!! Form::label('password', "密码", ['class' => 'am-u-sm-3']) !!}
-                <div class="am-u-sm-9">
-                    {!! Form::password('password', ['required' => 'required']) !!}
-                </div>
-            </div>
-            <div class="am-form-group">
-                {!! Form::label('password_confirmation', "确认密码", ['class' => 'am-u-sm-3']) !!}
-                <div class="am-u-sm-9">
-                    {!! Form::password('password_confirmation', ['required' => 'required']) !!}
-                </div>
-            </div>
-            <div class="am-form-group">
-                {!! Form::label('role', "所属分组", ['class' => 'am-u-sm-3']) !!}
-                <div class="am-u-sm-9">
-
-                    @foreach($all_roles as $one_role)
-                        <label class="am-checkbox-inline">
-                            <input type="checkbox" value="{{ $one_role->id }}"  data-am-ucheck
-                                   data-accept="@foreach($one_role->admins as $admin)|{{ $admin->id }}|@endforeach">
-                            {{ $one_role->role }}
-                        </label>
-                    @endforeach
-                </div>
-            </div>
-            {!! Form::hidden('id') !!}
-            {!! Form::hidden('roles') !!}
-            <div class="am-form-group am-modal-footer">
-                <span class="am-modal-btn am-btn am-btn-default" data-am-modal-cancel>取消</span>
-                <span class="am-btn submit-btn am-btn-primary">确定</span>
-            </div>
-
-        </fieldset>
-        {!! Form::close() !!}
-        @include('error')
-    </div>
     {{--</div>--}}
     <script>
         $(function() {
-            $('.btn-delete').on('click', function() {
-                $('#my-confirm').modal({
-                    relatedTarget: this,
-                    onConfirm: function() {
-                        var $link = $(this.relatedTarget);
-                        $("#opera_id").val($link.data('id'));
-                        $("#admin_form").submit();
-                    }
-                });
-            });
 
             $('.edit-one').on('click', function() {
                 var $link = $(this);
@@ -132,7 +104,7 @@
                     //操作checkbox
                     $("#edit_form").find('input[type="checkbox"]').each(function () {
 
-                        if($(this).data('accept').indexOf($admin_id) > -1) {
+                        if($(this).data('accept').indexOf('-'+$admin_id+'-') > -1) {
                             $(this).prop('checked', true);
                         }else{
                             $(this).prop('checked', false);

@@ -29,9 +29,9 @@ class AdminAuthenticated
         $nav            = "";
         $current_route  = collect(Route::getCurrentRoute())->first();
 
-        $permissions    = array() ;
-        $my_permissions = array();
-        $temp           = array();
+        $permissions    = array() ; // to generate the sidebar menus
+        $my_permissions = array();  // all the permissions that the current admin has
+        $temp           = array();  // filter the possible repeat sidebar menu
 
         $user           = Admin::user();
         if( $user ) {
@@ -66,7 +66,7 @@ class AdminAuthenticated
         //使用array_unique是因为多角色用户可能权限有重复
 
         if(! in_array( $current_route, array_unique($my_permissions))) {
-            abort(403, "你没有权限执行当前操作");
+            return redirect()->back()->withErrors("你没有权限执行当前操作！！！");
         }
 
         view()->share('nav', $nav);

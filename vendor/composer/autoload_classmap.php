@@ -6,10 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddColumnIntoPermission' => $baseDir . '/database/migrations/2015_12_10_133614_add_column_into_permission.php',
+    'AddColumnIntoPermissionTable' => $baseDir . '/database/migrations/2015_12_11_124129_add_column_into_permission_table.php',
     'AddUserIdIntoArticles' => $baseDir . '/database/migrations/2015_11_26_233348_add_user_id_into_articles.php',
+    'CreateAdminsTable' => $baseDir . '/database/migrations/2015_12_09_174817_create_admins_table.php',
     'CreateArticleTable' => $baseDir . '/database/migrations/2015_11_25_061844_create_article_table.php',
-    'CreateArticlesTable' => $baseDir . '/database/migrations/2015_11_26_071822_create_articles_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreatePermissionRoleAdminTable' => $baseDir . '/database/migrations/2015_12_10_153327_create_permission_role_admin_table.php',
+    'CreateRolesTable' => $baseDir . '/database/migrations/2015_12_10_082621_create_roles_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -84,6 +88,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'InsertPermissionsSeeder' => $baseDir . '/database/seeds/InsertPermissionsSeeder.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

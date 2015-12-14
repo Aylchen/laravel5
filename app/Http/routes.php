@@ -55,10 +55,6 @@ Route::post('/admin/login', 'AdminController@doLogin');
 Route::get('/admin/logout', 'AdminController@doLogout');
 
 
-
-
-
-
 Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
     Route::get('/', 'AdminController@index' );
@@ -109,7 +105,13 @@ Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     });
 
 
-    Route::get('/comments', 'AdminController@comments');
+    Route::group(['prefix' => 'comments'], function () {
+
+        Route::get('/', 'AdminController@comments');
+
+        Route::post('delete', 'AdminController@comment_delete');
+
+    });
 
 
 });
