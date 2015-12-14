@@ -17,11 +17,9 @@ use App\Http\Requests;
 class AdminController extends Controller
 {
 
-
+// with_add 是否有添加功能
     public function __construct ()
     {
-        //用户登录后通过关联模型获取到当前用户的权限列表
-        //使用视图共享数据来向视图assign数据
 
     }
 
@@ -30,19 +28,29 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    public function permissions ()
+    private function _get_permissions ()
     {
-        $all_permissions             = Permission::all();
-      //  $all_permissions = array();
-/*        foreach($all as $key => $one) {
-
+        $all             = Permission::all();
+        $all_permissions = array();
+        foreach($all as $key => $one) {
+            if(strpos($one->permission, '/') === false) {
+                $all_permissions[$one->permission][] = $one;
+                continue;
+            }
             $temp  =  explode('/', $one->permission);
             if($key == 0) {
                 $all_permissions[$temp[0]][] =   $one;
             }else {
                 $all_permissions[$temp[1]][] =   $one;
             }
-        }*/
+        }
+
+        return $all_permissions;
+    }
+
+    public function permissions ()
+    {
+        $all_permissions = $this->_get_permissions();
 
         $with_add        = true;
 
@@ -65,16 +73,17 @@ class AdminController extends Controller
             'permission' => 'required',
             'permission_name' => 'required'
         ));
-        //根据$request->input('id')判断是create还是update
-        if( Permission::where('permission', $request->input('permission'))->first() ) {
-            return redirect()->back()->withErrors('该路由已存在！');
-        }
 
-        if( Permission::where('permission_name', $request->input('permission_name'))->first() ) {
-            return redirect()->back()->withErrors('该路由名称已存在！');
-        }
-
+        //check repeat
         if(! $request->input('id')) {
+
+            if( Permission::where('permission', $request->input('permission'))->first() ) {
+                return redirect()->back()->withErrors('该路由已存在！');
+            }
+
+            if( Permission::where('permission_name', $request->input('permission_name'))->first() ) {
+                return redirect()->back()->withErrors('该路由名称已存在！');
+            }
 
             $lastInsert = Permission::create($request->all());
             PermissionRole::create(array(
@@ -82,6 +91,19 @@ class AdminController extends Controller
                 'role_id'      => 1
             ));
         } else {
+
+            $self = Permission::find($request->input('id'));
+
+            if( ($self->permission != $request->input('permission')) &&
+                 Permission::where('permission', $request->input('permission'))->first() ) {
+                return redirect()->back()->withErrors('该路由已存在！');
+            }
+
+            if( ($self->permission_name != $request->input('permission_name')) &&
+                Permission::where('permission_name', $request->input('permission_name'))->first() ) {
+                return redirect()->back()->withErrors('该路由名称已存在！');
+            }
+
             Permission::find($request->input('id'))->update($request->all());
         }
 
@@ -92,7 +114,7 @@ class AdminController extends Controller
     {
         $all_roles = Role::all();
 
-        $all_permissions = Permission::all();
+        $all_permissions = $this->_get_permissions();
 
         $with_add        = true;
 
@@ -119,17 +141,23 @@ class AdminController extends Controller
 
         $permissions = array_filter(explode(',', $request->input('permissions')));
 
-        if(Role::where('role', $request->input('role'))->first() ) {
-            return redirect()->back()->withErrors('该角色已存在！');
-        }
-
         if(! $request->input('id')) {
+
+            if(Role::where('role', $request->input('role'))->first() ) {
+                return redirect()->back()->withErrors('该角色已存在！');
+            }
 
             $lastInsert = Role::create($request->all());
 
             $insertRoleId =  $lastInsert->id;
 
         } else {
+
+            $self = Role::find($request->input('id')) ;
+            if( ($self->role != $request->input('role')) &&
+                Role::where('role', $request->input('role'))->first() ) {
+                return redirect()->back()->withErrors('该角色已存在！');
+            }
 
             $insertRoleId = $request->input('id');
 
@@ -178,12 +206,12 @@ class AdminController extends Controller
     {
         $roles = array_filter(explode(',', $request->input('roles')));
 
-        //check if the username has already exists
-        if( Admin::where('username', $request->input('username'))->first() ) {
-            return redirect()->back()->withErrors('该用户名已存在！');
-        }
-
         if(! $request->input('id')) {
+
+            //check if the username has already exists
+            if( Admin::where('username', $request->input('username'))->first() ) {
+                return redirect()->back()->withErrors('该用户名已存在！');
+            }
 
             $lastInsert = Admin::create(
                 array(

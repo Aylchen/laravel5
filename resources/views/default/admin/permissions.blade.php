@@ -13,7 +13,8 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($all_permissions as $one)
+        @foreach($all_permissions as $two)
+            @foreach($two as $one)
             <tr>
                 <td>{{ $one->id }}</td>
                 <td><a href="javascript:">{{ $one->permission_name }}</a></td>
@@ -34,6 +35,8 @@
                     </div>
                 </td>
             </tr>
+            @endforeach
+            <tr><td colspan="5" style="background: #ddd;"></td></tr>
         @endforeach
         </tbody>
     </table>

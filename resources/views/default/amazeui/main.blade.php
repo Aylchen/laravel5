@@ -38,8 +38,8 @@
                     <span class="am-icon-users"></span> {{  \App\Admin::user()->username }} <span class="am-icon-caret-down"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    {{-- <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
-                     <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>--}}
+                     <li><a href="{{ url('/') }}"><span class="am-icon-home"></span> 前台</a></li>
+                     {{--<li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>--}}
                     <li><a href="{{ url('admin','logout') }}"><span class="am-icon-power-off"></span> 退出</a></li>
                 </ul>
             </li>

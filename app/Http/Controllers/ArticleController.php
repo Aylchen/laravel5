@@ -94,7 +94,9 @@ class ArticleController extends Controller
 
         if(Gate::denies( 'update_delete_article', $article)) {
 
-            abort(403,'你没有权限执行当前edit操作');
+           // abort(403,'你没有权限执行当前edit操作');
+
+            return back()->withErrors('你没有权限执行当前edit操作');
 
         }
 
@@ -127,7 +129,7 @@ class ArticleController extends Controller
 
         if(Gate::denies( 'update_delete_article', $article)) {
 
-            abort(403,'你没有权限执行当前delete操作');
+            return back()->withErrors('你没有权限执行当前delete操作');
 
         }
 

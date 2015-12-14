@@ -43,6 +43,7 @@
         </tbody>
     </table>
 
+
     <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_form_modal">
         {!! Form::open(['url'=> url('admin',['roles','edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
         <fieldset>
@@ -57,12 +58,15 @@
             <div class="am-form-group">
                 {!! Form::label('role', "权限列表", ['class' => 'am-u-sm-3']) !!}
                 <div class="am-u-sm-9 permission-lists">
-                    @foreach($all_permissions as $one_per)
-                        <label class="am-checkbox-inline">
+                    @foreach($all_permissions as $one_pers)
+                        @foreach($one_pers as $one_per)
+                        <label class="am-checkbox-inline pull-left">
                             <input type="checkbox" value="{{ $one_per->id }}"  data-accept="@foreach($one_per->roles as $role)|{{ $role->id }}|@endforeach"
                                    data-am-ucheck >
                             {{ $one_per->permission_name }}
                         </label>
+                        @endforeach
+                        <div class="clearfix"></div>
                     @endforeach
                 </div>
             </div>
@@ -73,6 +77,7 @@
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
                 <span class="submit-btn am-btn">确定</span>
             </div>
+
 
         </fieldset>
         {!! Form::close() !!}
