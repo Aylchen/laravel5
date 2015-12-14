@@ -40,7 +40,7 @@
 
 
     <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_form_modal">
-        {!! Form::open(['url'=> url('admin',['permissions','edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
+        {!! Form::open(['url'=> url('admin',['permissions', 'edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
         <fieldset>
             <h5>&nbsp;</h5>
             <div class="am-form-group">

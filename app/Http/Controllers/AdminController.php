@@ -13,9 +13,6 @@ use App\Article;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller
 {
@@ -241,14 +238,14 @@ class AdminController extends Controller
     public function article_delete(Request $request)
     {
         Article::where("id", $request->input('delete_id'))->delete();
-//at the same time, delete all the comments of the articles
+        //at the same time, delete all the comments of the articles
         Comment::where("article_id", $request->input('delete_id'))->delete();
         return redirect()->back();
     }
 
     public function comments()
     {
-        $all_comments  = Comment::latest()->paginate(10);
+        $all_comments  = Comment::latest()->paginate(20);
 
         $current_form = 'comments';
 
@@ -311,7 +308,7 @@ class AdminController extends Controller
     public function doLogout ( )
     {
         session([ config('app.admin_session') => null ]);
-        cookie( 'user_info', null );
         return redirect('/admin');
     }
+
 }

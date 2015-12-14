@@ -59,7 +59,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
     Route::get('/', 'AdminController@index' );
 
-
     Route::group(['prefix' => 'permissions'], function () {
 
         Route::get('/', 'AdminController@permissions');
@@ -87,7 +86,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::post('edit', 'AdminController@administrator_edit');
     });
 
-
     Route::group(['prefix' => 'users'], function () {
 
         Route::get('/', 'AdminController@users');
@@ -103,7 +101,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::post('delete', 'AdminController@article_delete');
 
     });
-
 
     Route::group(['prefix' => 'comments'], function () {
 
