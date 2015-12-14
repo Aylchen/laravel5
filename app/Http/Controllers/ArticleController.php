@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Comment;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Article;
 use Illuminate\Support\Facades\Auth;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
-
+    public $pageCount = 10;
     public function __construct()
     { // Auth all except index and show Article
         $this->middleware('auth',['except' => ['index','show']]);
@@ -19,13 +20,23 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request)
     {
-        $articles =  Article::latest()-> paginate(5);
-
         $title    = '文章列表';
 
-        return view('article.index', compact('articles', 'title'));
+        $data     = $request->all();
+
+        $key      = null;
+
+        if(! empty($data['key'])) {
+            $key  = $data['key'];
+            $articles = Article::where('title','like', '%'.$data['key'].'%')->latest()->paginate($this->pageCount);
+        } else {
+            $articles =  Article::latest()-> paginate($this->pageCount);
+        }
+
+        $search_url = url('articles', 'index');
+        return view('article.index', compact('articles', 'title', 'key', 'search_url'));
     }
 
     /**
@@ -157,5 +168,10 @@ class ArticleController extends Controller
     public function getNextArticleId ($id)
     {
         return Article::where('id', '>', $id)->min('id');
+    }
+
+    public function search(Request $request)
+    {
+        var_dump($request->all());
     }
 }

@@ -7,11 +7,13 @@
     {!! Html::theme_style('/css/style.css') !!}
     {!! Html::script('/js/jquery.min.js') !!}
     {!! Html::script('/js/bootstrap.min.js') !!}
+    {!! Html::style('/assets/css/amazeui.min.css') !!}
+
 </head>
 <body>
 <div class="container">
     @include('nav')
-    <div class="content">
+    <div class="content" style="position:relative">
         @yield('content')
     </div>
     <footer>

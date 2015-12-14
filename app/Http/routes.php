@@ -30,6 +30,9 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('/articles/{id}/delete', 'ArticleController@destroy');
 
+Route::post('articles/index', 'ArticleController@index');
+
+Route::get('articles/index', 'ArticleController@index');
 Route::resource('articles', 'ArticleController');
 //下边两个是发表评论时用，用户没有登录时需要先登录然后跳转回文章页面（这里的{id}为article id
 Route::post('comments/{id}', 'CommentController@store');
@@ -55,6 +58,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
     Route::patch('comments/{id}', 'CommentController@update');
 
     Route::get('articles', 'UserController@articles');
+
+    Route::post('articles', 'UserController@articles');
 
 });
 
