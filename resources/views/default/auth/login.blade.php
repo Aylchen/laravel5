@@ -10,16 +10,12 @@
         {!! Form::label('password','Password:') !!}
         {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Input The password']) !!}
     </div>
-
-    <a href="/auth/register">Sign Up</a>
+    <p>
+        <a href="{{ url('auth', 'register') }}">Sign Up</a>
+        <a href="{{ url('password', 'email') }}" class="pull-right">Reset password</a>
+    </p>
     {!! Form::submit('Sign In', ['class'=>'btn btn-primary form-control']) !!}
     {!! Form::close() !!}
 
     @include('error')
 @endsection
-
-{{--
-@section('sidebar')
-    @parent
-    Add New SideBar
-@endsection--}}
