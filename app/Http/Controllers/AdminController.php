@@ -38,11 +38,7 @@ class AdminController extends Controller
                 continue;
             }
             $temp  =  explode('/', $one->permission);
-            if($key == 0) {
-                $all_permissions[$temp[0]][] =   $one;
-            }else {
-                $all_permissions[$temp[1]][] =   $one;
-            }
+            $all_permissions[$temp[1]][] =   $one;
         }
 
         return $all_permissions;

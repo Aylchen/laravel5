@@ -28,6 +28,7 @@
     </div>
     {{-- commit a comment by the current user --}}
     <comment>
+        @include('error')
         {!! Form::open(['url'=>url('comments', $article->id)]) !!}
         <div class="form-group">
             {!! Form::label('content','发表评论') !!}
@@ -36,7 +37,6 @@
         {!! Form::hidden('article_id', $article->id) !!}
         {!! Form::submit('提交评论', ['class'=>'btn btn-primary form-control']) !!}
         {!! Form::close() !!}
-        @include('error')
     </comment>
     {{-- comment list --}}
     <comments>

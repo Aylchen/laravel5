@@ -61,7 +61,7 @@
                     @foreach($all_permissions as $one_pers)
                         @foreach($one_pers as $one_per)
                         <label class="am-checkbox-inline pull-left">
-                            <input type="checkbox" value="{{ $one_per->id }}"  data-accept="@foreach($one_per->roles as $role)|{{ $role->id }}|@endforeach"
+                            <input type="checkbox" value="{{ $one_per->id }}"  data-accept="@foreach($one_per->roles as $role)-{{ $role->id }}-@endforeach"
                                    data-am-ucheck >
                             {{ $one_per->permission_name }}
                         </label>
@@ -96,7 +96,7 @@
                     //操作checkbox
                     $("#edit_form").find('input[type="checkbox"]').each(function () {
 
-                        if($(this).data('accept').indexOf($role_id) > -1) {
+                        if($(this).data('accept').indexOf('-'+$role_id+'-') > -1) {
                             $(this).prop('checked', true);
                         }else{
                            $(this).prop('checked', false);

@@ -3,7 +3,7 @@
 @section('content_table')
     <table class="am-table am-table-striped am-table-hover table-main">
         <thead>
-        <tr><th colspan="10">@include('error')
+        <tr><th colspan="10">@include('error')</th></tr>
         <tr>
             <th class="table-id">ID</th>
             <th class="table-title">权限名称</th>
