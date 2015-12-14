@@ -31,7 +31,7 @@ class AdminAuthenticated
 
         $permissions    = array() ; //to generate the sidebar menus
         $my_permissions = array();  // all the permissions that the current admin has
-        $temp           = array();  // filter the possible repeat sidebar menu
+        $temp           = array();  // filter the possible repeat menu
 
         $user           = Admin::user();
         if( $user ) {
@@ -66,7 +66,7 @@ class AdminAuthenticated
         //使用array_unique是因为多角色用户可能权限有重复
 
         if(! in_array( $current_route, array_unique($my_permissions))) {
-        //    return redirect()->back()->withErrors("你没有权限执行当前操作！！！");
+            return redirect()->back()->withErrors("你没有权限执行当前操作！！！");
         }
 
         view()->share('nav', $nav);

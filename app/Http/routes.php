@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::get('/', 'IndexController@index');
 
 Route::get('/home', 'IndexController@home');
@@ -48,12 +47,11 @@ Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
 
 });
 
-Route::get('/admin/login', 'AdminController@login');
+Route::get('admin/login', 'AdminController@login');
 
-Route::post('/admin/login', 'AdminController@doLogin');
+Route::post('admin/login', 'AdminController@doLogin');
 
-Route::get('/admin/logout', 'AdminController@doLogout');
-
+Route::get('admin/logout', 'AdminController@doLogout');
 
 Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
@@ -109,6 +107,5 @@ Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::post('delete', 'AdminController@comment_delete');
 
     });
-
 
 });

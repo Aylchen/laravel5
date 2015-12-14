@@ -32,7 +32,17 @@ class AdminController extends Controller
 
     public function permissions ()
     {
-        $all_permissions = Permission::all();
+        $all_permissions             = Permission::all();
+      //  $all_permissions = array();
+/*        foreach($all as $key => $one) {
+
+            $temp  =  explode('/', $one->permission);
+            if($key == 0) {
+                $all_permissions[$temp[0]][] =   $one;
+            }else {
+                $all_permissions[$temp[1]][] =   $one;
+            }
+        }*/
 
         $with_add        = true;
 
@@ -56,16 +66,15 @@ class AdminController extends Controller
             'permission_name' => 'required'
         ));
         //根据$request->input('id')判断是create还是update
+        if( Permission::where('permission', $request->input('permission'))->first() ) {
+            return redirect()->back()->withErrors('该路由已存在！');
+        }
+
+        if( Permission::where('permission_name', $request->input('permission_name'))->first() ) {
+            return redirect()->back()->withErrors('该路由名称已存在！');
+        }
 
         if(! $request->input('id')) {
-
-            if( Permission::where('permission', $request->input('permission'))->first() ) {
-                return redirect()->back()->withErrors('该路由已存在！');
-            }
-
-            if( Permission::where('permission_name', $request->input('permission_name'))->first() ) {
-                return redirect()->back()->withErrors('该路由名称已存在！');
-            }
 
             $lastInsert = Permission::create($request->all());
             PermissionRole::create(array(
@@ -110,11 +119,11 @@ class AdminController extends Controller
 
         $permissions = array_filter(explode(',', $request->input('permissions')));
 
-        if(! $request->input('id')) {
+        if(Role::where('role', $request->input('role'))->first() ) {
+            return redirect()->back()->withErrors('该角色已存在！');
+        }
 
-            if(Role::where('role', $request->input('role'))->first() ) {
-                return redirect()->back()->withErrors('该角色已存在！');
-            }
+        if(! $request->input('id')) {
 
             $lastInsert = Role::create($request->all());
 
@@ -169,14 +178,12 @@ class AdminController extends Controller
     {
         $roles = array_filter(explode(',', $request->input('roles')));
 
+        //check if the username has already exists
+        if( Admin::where('username', $request->input('username'))->first() ) {
+            return redirect()->back()->withErrors('该用户名已存在！');
+        }
+
         if(! $request->input('id')) {
-
-            //check if the username has already exists
-
-            if( Admin::where('username', $request->input('username'))->first() ) {
-                return redirect()->back()->withErrors('该用户名已存在！');
-            }
-
 
             $lastInsert = Admin::create(
                 array(
