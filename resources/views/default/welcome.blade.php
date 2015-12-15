@@ -18,80 +18,44 @@
             <div class="content">
                 <div class="title">Readme<small>:</small></div>
             </div>
-            <pre>
-                    ====================================================================================
+<pre>
+    About This Project
+    ===================================
+    This project is about laravel blog which is divided into two parts : the front is used for the normal users whose ability is to see
+    the blogs already exists in the database, to sign in/sign up, to publish a new blog, to comment to every blog and to edit/delete himself's
+    articles and comments and the backend part is for the administrators whose ability is to add/edit/delete the permissions of all the
+    routes, roles, admins, articles and comments. There hasn't a necessary combination between these two parts.
 
-                    Blog目前的一些功能详解：
+    How To Run This Project
+    ===================================
+    ###Check your environment
+    First of all, If you want to run this project, you need to set up all the environment that the laravel framework requires.
 
-                    1) 用户登录与注册
+    ###Change the permission of the storage directory
+    Second, you should cd into your root directory, and give the directory named storage the permission 777 in case that the framework can't
+    access into this directory and then run errors.The command is like this:<br/>
+           `sudo chmod -R 777 storage/*`
 
-                    2) 文章的显示/新增/编辑/删除
-                        a) 用户不等录可查看文章
-                        b) 新增/编辑/删除文章必须在用户登录的情况下方可操作；
-                        c) 编辑/删除闻着那该加入了权限功能；只有文章的发布者方可对该文章进行编辑和删除操作
+    ###Import sql into your database
+    After that, You should import the sql file which is in the sql directory relative to the root directory into your local mysql environment.
 
-                    3) 文章评论功能
-                        a) 只有登录用户方可评论文章
-                        b) 评论的编辑和删除功能加入权限功能：只有当前评论的发布者方可对该评论进行编辑和删除；
+    ###Generate an APP_KEY
+    Make sure that you are now at the root directory, you should generate a new key for the framework, the command is like this:<br/>
+           `php artisan key:generate`
 
-                    4) 用户中心
-                        a) 我发布的文章
-                            可对自己发布的文章进行编辑和删除
-                        b) 我发布的评论
-                            可对自己发布的评论进行编辑和删除
-                        c) 我的基本信息
+    ###Modify your config files
+    1) All the framework's config files are in the config directory, first you should modify the key's value which is named as 'key' in app.php,
+       remove 'SomeRandomString' and enter the key that you generated last step,<br/>
+    2) Modify database.php file, you should type into your local mysql configuration.
 
-                    5) 主题切换功能
+    ###Run the server
+    After all the steps above finished, make sure you are at the root directory, you should run the follow command to start the inner server:<br/>
+           `php artisan serve`
 
-                    ======================================================================================
+    ###The last step
+    Open your browser, access `'http://localhost:8000'`, a home page which is about the readme means that you aren't in vain.
 
-                    关于Theme切换的说明:
-
-                    a) 主题的使用：
-
-                    1) 默认主题为default；
-
-                    2) 更改主题只需要修改config/app.php中的theme即可
-
-                    3) 主题的切换包括模板的切换和样式的切换
-
-                        模板包括当前主题模板及公共模板（所有主题可共用，如：views/errors/404.blade.php）
-                        样式包括当前主题样式及公共样式( 所有主题可共用，public/css/* public/js/* 等)
-
-                    b) 主题功能修改
-
-                    1) 修改了helpers.php下view方法，将主题添加为前置
-
-                    2) 修改View/Compiler/BladeCompiler.php中两个方法：compileExtends / compileInclude
-
-                    3) 添加样式的变化
-
-                       在HtmlBuilder中添加了theme_script和theme_style两个方法，可以在原来的写法上将theme作前置加上
-
-                    4) 不同主题公共模板和样式的使用
-
-                        ***********样式************
-
-                        1) 公共样式 template 中使用 @{!! Html::script|style('') !!}
-                            public/css/*
-                            public/js/*
-
-                        2) 主题样式   template 中使用 @{!! Html::theme_script|theme_style('') !!}
-                            public/themeName/css/*
-                            public/themeName/js/*
-
-                        ***********模板************
-
-                        1) 公共模板
-                        在模板的<code>@ include</code> 和 <code>@ extends</code>中都可接受第二个参数：true|false, 与第一个参数以, 隔开
-                        用法: <code>@ include('<templateName>', true)</code> | <code>@ extends('<templateName>', true)</code>
-
-                        默认false，使用的是当前主题下的模板
-                        如为true, 则默认使用公共模板 views/public/
-
-                        2) 主题不能命名为public
-
-                </pre>
+</pre>
         </div>
     </body>
 </html>

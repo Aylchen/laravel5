@@ -111,7 +111,7 @@ class CommentController extends Controller
             //abort(403, "Permission Denied");
             return back()->withErrors("Permission Denied");
         }
-
+        $comment->delete();
         return redirect(url('user', 'comments'));
     }
 }

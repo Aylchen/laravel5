@@ -255,6 +255,10 @@ class AdminController extends Controller
     {
         User::where("id", $request->input('delete_id'))->delete();
 
+        Article::where("user_id", $request->input('delete_id'))->delete();
+
+        Comment::where("user_id", $request->input('delete_id'))->delete();
+
         return redirect()->back();
     }
 
