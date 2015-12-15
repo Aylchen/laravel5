@@ -42,6 +42,6 @@ Open your browser, access `'http://localhost:8000'`, a home page which is about 
 
 
 ###NOTE
-The admin test account:
+The admin test account:<br/>
  `Aylchen`<br/>
  `123123`
