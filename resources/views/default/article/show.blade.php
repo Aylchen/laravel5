@@ -13,6 +13,7 @@
       {{--  @endif--}}
         <div class="page-header">
             <h3>{{ $article->title }}</h3>
+            <p class="text-center">Author：<small>{{ $article->user->username }}</small></p>
         </div>
         <pre>{{ $article->content }}</pre>
 
@@ -40,34 +41,25 @@
     </comment>
     {{-- comment list --}}
     <comments>
-        <h3 class="text-left comment">评论列表({{ $comments->count() }})：</h3>
-        <ul class="list-group comment-list">
-        @if( $comments->count() == 0 )
-            <li class="list-group-item">暂无评论</li>
-        @else
-            @foreach($comments as $comment)
-                <li class="list-group-item">
-                    <div class="comment-user">
-                        <small class="text-primary">{{ $comment->created_at }}</small>
-                        &nbsp;&nbsp;<strong>{{ $comment->user->username }}</strong>
-                    </div>
-                    <div class="comment-content">
-                        {{ $comment->content }}
-                    </div>
-                </li>
-            @endforeach
-        @endif
-        </ul>
+
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+            <div class="am-list-news-hd am-cf">
+                <h2>评论列表({{ $comments->count() }})：</h2>
+            </div>
+
+            <div class="am-list-news-bd">
+                <ul class="am-list comment-list">
+                    @forelse($comments as $comment)
+                    <li class="am-g am-list-item-dated">
+                        <a href="javascript:" class="am-list-item-hd " style="white-space: normal; padding-right:140px;"><strong>{{ $comment->user->username }}：</strong>{{ $comment->content }}</a>
+                        <span class="am-list-date">{{ $comment->created_at }}</span>
+                    </li>
+                    @empty
+                        <li class="am-g am-list-item-dated">暂无评论</li>
+                    @endforelse
+
+                </ul>
+            </div>
+        </div>
     </comments>
 @endsection
-<script>
-/*    $(function() {
-        $('.comment-list').on('click', '.pagination a', function (e) {
-            var url = $(this).attr('href');
-            $(".comment-list").load(url+" .comment-list");
-            return false;
-        });
-    });*/
-
-</script>
-

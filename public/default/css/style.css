@@ -32,12 +32,25 @@ footer {
 
 .absolute-btn {
     position: absolute;
-    right: 2%;
-    top: 35%;
+    top: 5px;
+    right: 10%;
+}
+
+.absolute-btn .am-btn {
+    float:right;
 }
 
 footer {
     height: 3em;
     border-top : 1px solid #ddd;
     margin-top : 20px;
+}
+.comment-list strong {
+
+    color: #2A2925;
+}
+.comment-list a{
+    cursor: default;
+    text-decoration: none;
+    color: #999;
 }

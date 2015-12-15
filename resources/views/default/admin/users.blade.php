@@ -5,11 +5,11 @@
         <thead>
         <tr><th colspan="10"> @include('error')</th> </tr>
         <tr>
-            <th class="table-id">ID</th>
-            <th class="table-title">用户名</th>
+            <th>ID</th>
+            <th>用户名</th>
             <th style="width:45%;">邮箱</th>
-            <th class="table-date am-hide-sm-only">创建日期</th>
-            <th class="table-set">操作</th>
+            <th>创建日期</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>

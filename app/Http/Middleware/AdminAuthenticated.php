@@ -19,7 +19,7 @@ class AdminAuthenticated
     public function handle($request, Closure $next)
     {
 
-        //step1 checkout if the administrator has logged in
+        //step1 check if the administrator has logged in
 
         if(! session(config('app.admin_session'))) {
             return redirect( url('admin', 'login') );
@@ -29,7 +29,7 @@ class AdminAuthenticated
         $nav            = "";
         $current_route  = collect(Route::getCurrentRoute())->first();
 
-        $permissions    = array() ; //to generate the sidebar menus
+        $permissions    = array() ; // to generate the sidebar menus
         $my_permissions = array();  // all the permissions that the current admin has
         $temp           = array();  // filter the possible repeat menu
 
@@ -45,9 +45,19 @@ class AdminAuthenticated
                     if( $current_route == $permission->permission ) {
                         $nav = $permission->permission_name;
                     }
-                    if( $permission->is_show == 1) { //通过is_show字段来取得左侧导航菜单 ==1显示
+
+                    /*
+                     *  to get sidebar menus by is_show column,
+                     *  if is_show == 1, the menu shows
+                     */
+
+                    if( $permission->is_show == 1) {
                         if(in_array($permission->permission_name, $temp)) {
-                            //多角色用户如果权限重复,则去除
+                            /*
+                             * if a user has multi roles, and these roles has cross permissions, to avoid
+                             * a repeated menu
+                             * $temp array is for this
+                             */
                             continue;
                         }
                         $permissions[] =
@@ -63,10 +73,10 @@ class AdminAuthenticated
             }
         }
 
-        //使用array_unique是因为多角色用户可能权限有重复
+        // array_unique used just like $temp array
 
         if(! in_array( $current_route, array_unique($my_permissions))) {
-            return redirect()->back()->withErrors("你没有权限执行当前操作！！！");
+            return redirect()->back()->withErrors("Permission Denied！！！");
         }
 
         view()->share('nav', $nav);

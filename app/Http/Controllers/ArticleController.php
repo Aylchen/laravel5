@@ -12,8 +12,9 @@ class ArticleController extends Controller
 {
     public $pageCount = 10;
     public function __construct()
-    { // Auth all except index and show Article
+    {   // Auth all except index and show Article
         $this->middleware('auth',['except' => ['index','show']]);
+        view()->share('highlight', true);
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +23,7 @@ class ArticleController extends Controller
      */
     public function index( Request $request)
     {
-        $title    = '文章列表';
+        $title    = 'Article Lists';
 
         $data     = $request->all();
 
@@ -57,19 +58,16 @@ class ArticleController extends Controller
      */
     public function store(Requests\ArticleRequest $request)
     {
-        //使用Request 进行验证 ，request对象为自己创建的Request对象
+        /*
+         * use the request defined by the developer,
+         * the same as the $this->validate($request, $rules = array() )
+         */
+
         Article::create(array_merge(['user_id'=>Auth::user()->id], $request->all()));
 
         return redirect('/articles');
     }
-    /**
-     * Validation Method 2
-     */
-/*    public function store(Request $request)
-    {
-        $this->validate($request,['title' => 'required', 'content' => 'required']);
-        ...
-    }*/
+
     /**
      * Display the specified resource.
      *
@@ -79,16 +77,18 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article  = Article::findOrFail($id);
-        //如果要给comments添加分页，使用：//Comment::where('article_id', '=', $id)->latest()->paginate(20);在模板中{!! $comments->render() !!}
+
+        /*
+         * if use the pagination for the comments block, should get the comments collection like this:
+         * Comment::where('article_id', '=', $id)->latest()->paginate($pageCount);
+         * and then add {!! $comments->render() !!} in the template, but the best method I think is the
+         * ajax pagination, but don't know how to do
+         */
+
         $comments = $article->comments;
         $prev_id  = $this->getPrevArticleId($id);
         $next_id  = $this->getNextArticleId($id);
         return view('article.show', compact('article', 'comments', 'prev_id', 'next_id'));
-    }
-
-    public function gateShow()
-    {
-        echo "Here is a test message";
     }
 
     /**
@@ -105,9 +105,9 @@ class ArticleController extends Controller
 
         if(Gate::denies( 'update_delete_article', $article)) {
 
-           // abort(403,'你没有权限执行当前edit操作');
+           // abort(403, "You don't have the permission for the current operation");
 
-            return back()->withErrors('你没有权限执行当前edit操作');
+            return back()->withErrors("Permission denied");
 
         }
 
@@ -115,11 +115,9 @@ class ArticleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Requests\ArticleRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Requests\ArticleRequest $request, $id)
     {
@@ -139,26 +137,21 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
 
         if(Gate::denies( 'update_delete_article', $article)) {
-
-            return back()->withErrors('你没有权限执行当前delete操作');
-
+            return back()->withErrors("Permission denied");
         }
 
-    /*use $this->authorize can also check the ability of the current user, Usage:
-
-        $this->authorize('update_delete_article', $article);*/
+        /*
+         * use $this->authorize can also check the ability of the current user,
+         * Usage: $this->authorize('update_delete_article', $article);
+         */
 
         if( Article::where("id",$id)->delete() ) {
 
             Comment::where("article_id", $id)->delete();
 
-            return redirect('/articles');
-        } else {
-            $msg = 'Delete Failed';
-            return view('errors.redirect', compact('msg'));
+            return redirect('articles');
         }
     }
-
 
     public function getPrevArticleId ($id)
     {
@@ -170,8 +163,4 @@ class ArticleController extends Controller
         return Article::where('id', '>', $id)->min('id');
     }
 
-    public function search(Request $request)
-    {
-        var_dump($request->all());
-    }
 }

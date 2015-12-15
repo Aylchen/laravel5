@@ -5,12 +5,12 @@
         <thead>
         <tr><th colspan="10"> @include('error')</th> </tr>
         <tr>
-            <th class="table-id">ID</th>
-            <th class="table-title">发表人</th>
+            <th>ID</th>
+            <th>发表人</th>
             <th style="width:30%;">所属文章</th>
             <th style="width:45%;">评论内容</th>
-            <th class="table-date am-hide-sm-only">创建日期</th>
-            <th class="table-set">操作</th>
+            <th>创建日期</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>

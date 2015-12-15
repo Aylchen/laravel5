@@ -70,11 +70,11 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //检查用户是否有权限修改
         $comment = Comment::findOrFail($id);
 
         if(Gate::denies('updateOrDelete', $comment)) {
-            abort(403, "你没有权限编辑该条评论");
+            //abort(403, "Permission Denied");
+            return back()->withErrors("Permission Denied");
         }
 
 
@@ -106,15 +106,12 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
+
         if(Gate::denies('updateOrDelete', $comment)) {
-            abort(403, "你没有权限删除该条评论");
+            //abort(403, "Permission Denied");
+            return back()->withErrors("Permission Denied");
         }
 
-        if( $comment->delete() ) {
-            return redirect(url('user', 'comments'));
-        } else {
-            $msg = 'Delete Failed';
-            return view('errors.redirect', compact('msg'));
-        }
+        return redirect(url('user', 'comments'));
     }
 }

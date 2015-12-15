@@ -5,11 +5,11 @@
             <thead>
             <tr><th colspan="10"> @include('error')</th> </tr>
             <tr>
-                <th class="table-id">ID</th>
-                <th class="table-title">用户名</th>
+                <th>ID</th>
+                <th>用户名</th>
                 <th>所属角色</th>
-                <th class="table-date am-hide-sm-only">创建日期</th>
-                <th class="table-set">操作</th>
+                <th>创建日期</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
@@ -40,7 +40,6 @@
             @endforeach
             </tbody>
         </table>
-
 
         <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_form_modal">
             {!! Form::open(['url'=> url('admin',['administrators','edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
@@ -110,7 +109,6 @@
                             $(this).prop('checked', false);
                         }
                     });
-
 
                 } else if ($link.hasClass('add-true')) {
                     $("#username").attr('disabled', false).val('');

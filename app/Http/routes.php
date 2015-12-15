@@ -10,15 +10,20 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+/**
+ * *********************************Home*********************************
+ */
 Route::get('/', 'IndexController@index');
 
 Route::get('/home', 'IndexController@home');
 
+/**
+ * ********************************Auth**********************************
+ */
 Route::controller('auth', 'Auth\AuthController');
 
 /**
- * RESET THE PASSWORD
+ * **************************RESET THE PASSWORD**************************
  */
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
@@ -28,22 +33,33 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-Route::get('/articles/{id}/delete', 'ArticleController@destroy');
-
+/**
+ *  ******************************Article*********************************
+ */
+//article-all-search
 Route::match(['get', 'post'], 'articles/index', 'ArticleController@index');
 
+Route::get('/articles/{id}/delete', 'ArticleController@destroy');
+
 Route::resource('articles', 'ArticleController');
-//下边两个是发表评论时用，用户没有登录时需要先登录然后跳转回文章页面（这里的{id}为article id
+
+/*
+| when the user wants to submit a comment but he hasn't signed in,
+| then jump to the auth/login page and then redirect back, the id below
+| is the article_id
+*/
+
 Route::post('comments/{id}', 'CommentController@store');
 
 Route::get('comments/{id}', function ($id) {
-
     return redirect('/articles/'.$id);
-
 });
 
 Route::resource('comments', 'CommentController');
 
+/**
+ *  *******************************USER*************************************
+ */
 Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
 
     Route::get('profile', 'UserController@profile');
@@ -56,10 +72,14 @@ Route::group(['prefix' => 'user', 'middleware' => 'is_login'], function () {
 
     Route::patch('comments/{id}', 'CommentController@update');
 
+    // article-user-search
     Route::match(['get', 'post'], 'articles', 'UserController@articles');
 
 });
 
+/**
+ *  *******************************Admin*************************************
+ */
 Route::get('admin/login', 'AdminController@login');
 
 Route::post('admin/login', 'AdminController@doLogin');
@@ -69,6 +89,12 @@ Route::get('admin/logout', 'AdminController@doLogout');
 Route::group([ 'prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
     Route::get('/', 'AdminController@index' );
+
+    /*
+    | I still don't know how to simply the routes below,
+    | admin/delete/{action}/admin/delete/{action} can do, but this can't be used
+    | for the permission check in the middleware
+    */
 
     Route::group(['prefix' => 'permissions'], function () {
 

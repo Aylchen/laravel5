@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
-
-        {!! Html::style('/css/bootstrap.min.css') !!}
-        {!! Html::script('/js/jquery.min.js') !!}
-        {!! Html::script('/js/bootstrap.min.js') !!}
-
+        <title>Laravel Blog</title>
+        @include('source')
         <style>
             .title {
                 font-size: 20px;
@@ -20,10 +16,9 @@
         <div class="container">
             @include('nav')
             <div class="content">
-                <div class="title">Readme<small>:</small></div><br/>
+                <div class="title">Readme<small>:</small></div>
             </div>
             <pre>
-
                     ====================================================================================
 
                     Blog目前的一些功能详解：

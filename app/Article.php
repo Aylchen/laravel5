@@ -12,17 +12,13 @@ class Article extends Model
 
     protected $fillable = ['title', 'content', 'user_id'] ;
 
-    //set Field Attribute
-   /* public function setPublishedAttribute()
+    protected function user()
     {
-    //    $this->attributes['published'] = Carbon::now();
-    }*/
-
-    protected function users(){
         return $this->belongsTo('App\User');
     }
 
     protected function comments() {
-        return $this->hasMany('App\Comment', 'article_id', 'id')->orderBy('updated_at', 'desc');//article_id： foreign_key; id: local_key
+        //article_id： foreign_key; id: local_key
+        return $this->hasMany('App\Comment', 'article_id', 'id')->orderBy('updated_at', 'desc');
     }
 }

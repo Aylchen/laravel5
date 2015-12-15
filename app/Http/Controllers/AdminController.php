@@ -16,12 +16,11 @@ use App\Http\Requests;
 
 class AdminController extends Controller
 {
-
-// with_add 是否有添加功能
-    public function __construct ()
-    {
-
-    }
+    /**
+     *  $with_add is for the adding function
+     *  if $with_add is true, there should have a add-button for the current action-template
+     */
+    public function __construct () { }
 
     public function index ()
     {
@@ -30,6 +29,7 @@ class AdminController extends Controller
 
     private function _get_permissions ()
     {
+        // order the permission for page show, this is not necessary
         $all             = Permission::all();
         $all_permissions = array();
         foreach($all as $key => $one) {
@@ -57,7 +57,6 @@ class AdminController extends Controller
 
     public function permission_delete(Request $request)
     {
-
         Permission::where("id", $request->input('delete_id'))->delete();
 
         return redirect()->back();
@@ -70,15 +69,17 @@ class AdminController extends Controller
             'permission_name' => 'required'
         ));
 
-        //check repeat
+        //check repeat before operate the database
+        $error_msg_route      = 'This route has already existed!';
+        $error_msg_route_name = 'This route name has already existed!';
         if(! $request->input('id')) {
 
             if( Permission::where('permission', $request->input('permission'))->first() ) {
-                return redirect()->back()->withErrors('该路由已存在！');
+                return redirect()->back()->withErrors($error_msg_route);
             }
 
             if( Permission::where('permission_name', $request->input('permission_name'))->first() ) {
-                return redirect()->back()->withErrors('该路由名称已存在！');
+                return redirect()->back()->withErrors($error_msg_route_name);
             }
 
             $lastInsert = Permission::create($request->all());
@@ -92,12 +93,12 @@ class AdminController extends Controller
 
             if( ($self->permission != $request->input('permission')) &&
                  Permission::where('permission', $request->input('permission'))->first() ) {
-                return redirect()->back()->withErrors('该路由已存在！');
+                return redirect()->back()->withErrors($error_msg_route);
             }
 
             if( ($self->permission_name != $request->input('permission_name')) &&
                 Permission::where('permission_name', $request->input('permission_name'))->first() ) {
-                return redirect()->back()->withErrors('该路由名称已存在！');
+                return redirect()->back()->withErrors($error_msg_route_name);
             }
 
             Permission::find($request->input('id'))->update($request->all());
@@ -121,7 +122,6 @@ class AdminController extends Controller
 
     public function role_delete(Request $request)
     {
-
         Role::where("id", $request->input('delete_id'))->delete();
 
         return redirect()->back();
@@ -129,18 +129,17 @@ class AdminController extends Controller
 
     public function role_edit(Request $request)
     {
-
-
         $this->validate($request, array(
             'role' => 'required'
         ));
 
-        $permissions = array_filter(explode(',', $request->input('permissions')));
+        $permissions    = array_filter(explode(',', $request->input('permissions')));
 
+        $error_msg_role = 'The role has already existed!';
         if(! $request->input('id')) {
 
             if(Role::where('role', $request->input('role'))->first() ) {
-                return redirect()->back()->withErrors('该角色已存在！');
+                return redirect()->back()->withErrors($error_msg_role);
             }
 
             $lastInsert = Role::create($request->all());
@@ -152,7 +151,7 @@ class AdminController extends Controller
             $self = Role::find($request->input('id')) ;
             if( ($self->role != $request->input('role')) &&
                 Role::where('role', $request->input('role'))->first() ) {
-                return redirect()->back()->withErrors('该角色已存在！');
+                return redirect()->back()->withErrors($error_msg_role);
             }
 
             $insertRoleId = $request->input('id');
@@ -206,7 +205,7 @@ class AdminController extends Controller
 
             //check if the username has already exists
             if( Admin::where('username', $request->input('username'))->first() ) {
-                return redirect()->back()->withErrors('该用户名已存在！');
+                return redirect()->back()->withErrors('The username has already existed!');
             }
 
             $lastInsert = Admin::create(
@@ -305,11 +304,11 @@ class AdminController extends Controller
 
         if(empty($request->input('username'))) {
 
-            $error_msg = "用户名不能为空";
+            $error_msg = "The username field can't be blank";
 
         } else if( empty( $request->input('password'))) {
 
-            $error_msg = "密码不能为空";
+            $error_msg = "The password field can't be blank";
 
         } else {
 
@@ -324,12 +323,12 @@ class AdminController extends Controller
                     return redirect('/admin');
                 } else {
 
-                    $error_msg = "用户名和密码不匹配";
+                    $error_msg = "The user doesn't match the password";
 
                 }
 
             }else {
-                $error_msg = "用户不存在";
+                $error_msg = "The username doesn't exist";
             }
         }
 

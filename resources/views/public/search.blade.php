@@ -1,4 +1,4 @@
-<div class="am-g" style="position: absolute;width: 50%; top: 0;right: 30%;">
+<div class="am-g" style="position: absolute;width: 50%; top: 0; left: 13%;">
     {!! Form::open(['url' => $search_url]) !!}
     <div class="am-u-lg-6">
         <div class="am-input-group">

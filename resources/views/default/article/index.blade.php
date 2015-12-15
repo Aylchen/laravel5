@@ -1,23 +1,33 @@
 @extends('main')
-@section('content')
-    <h1 class="text-left">{{ $title }}&nbsp;&nbsp;<a href="/articles/create" class="btn btn-info">新增文章</a></h1>
-    @include('search', true)
-    <hr/>
-    <ul class="list-group">
-        @forelse($articles as $article)
-        <li class="list-group-item">
-            <p>Title: <a href="{{ url('articles', $article->id) }}">{{ $article->title }}</a></p>
-            <p>Content: {{ str_limit($article->content, 50) }}</p>
-            <p>Author: {{ App\User::find($article->user_id)->username }}</p>
-        </li>
-        @empty
-            <li class="list-group-item">暂无文章</li>
-        @endforelse
-    </ul>
-    {!! $articles->render() !!}
-@endsection
 
-{{--
-    Public template can be used like this
-    @include('common', true)
---}}
+@section('content')
+<div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+    <!--列表标题-->
+    <div class="am-list-news-hd am-cf">
+        <!--带更多链接-->
+        <h1 class="text-left">
+            {{ $title }}&nbsp;&nbsp;
+            <a href="{{ url('articles', 'create') }}" class="btn btn-info pull-right">新增文章</a>
+        </h1>
+        @include('search', true)
+    </div>
+
+    <div class="am-list-news-bd">
+        <ul class="am-list">
+            @forelse($articles as $article)
+            <li class="am-g am-list-item-dated">
+                <a href="{{ url('articles', $article->id) }}" class="am-list-item-hd ">
+                    {!! str_replace($key, '<span style="color:red">'.$key."</span>", $article->title) !!}
+                </a>
+                <span class="am-list-date">{{ $article->created_at }}</span>
+                <div class="am-list-item-text">{{ str_limit($article->content, 300) }}</div>
+            </li>
+            @empty
+                <li class="am-g am-list-item-desced">暂无文章</li>
+            @endforelse
+        </ul>
+        {!! $articles->render() !!}
+    </div>
+
+</div>
+@endsection

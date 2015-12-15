@@ -5,11 +5,11 @@
         <thead>
         <tr><th colspan="10">@include('error')</th></tr>
         <tr>
-            <th class="table-id">ID</th>
-            <th class="table-title">权限名称</th>
-            <th class="table-type">权限名称</th>
-            <th class="table-date am-hide-sm-only">创建日期</th>
-            <th class="table-set">操作</th>
+            <th>ID</th>
+            <th>权限名称</th>
+            <th>权限路由</th>
+            <th>创建日期</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -41,7 +41,6 @@
         </tbody>
     </table>
 
-
     <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_form_modal">
         {!! Form::open(['url'=> url('admin',['permissions', 'edit']), 'id' => 'edit_form', 'class'=> 'am-form am-modal-dialog am-form-horizontal']) !!}
         <fieldset>
@@ -71,7 +70,6 @@
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
                 <span class="submit-btn am-btn">确定</span>
             </div>
-
 
         </fieldset>
         {!! Form::close() !!}

@@ -31,7 +31,6 @@ class Admin extends Model
         } else {
 
             return false;
-//            return redirect('/admin');
 
         }
     }

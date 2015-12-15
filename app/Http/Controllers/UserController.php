@@ -40,7 +40,7 @@ class UserController extends Controller
 
     public function articles(Request $request)
     {
-        $title    = '我的文章';
+        $title    = 'My Articles';
 
         $data     = $request->all();
 
