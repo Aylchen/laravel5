@@ -26,7 +26,7 @@
                 <li class="am-g am-list-item-desced">暂无文章</li>
             @endforelse
         </ul>
-        {!! $articles->render() !!}
+        {!! $articles->appends(['key' => $key])->render() !!}
     </div>
 
 </div>

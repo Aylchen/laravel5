@@ -12,14 +12,10 @@ class Admin extends Model
 
     protected $hidden   = ['password'];
 
-
     protected function roles()
     {
         return $this->belongsToMany('App\Role');
     }
-
-
-
 
     protected static function user ()
     {

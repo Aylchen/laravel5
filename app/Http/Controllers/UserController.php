@@ -11,9 +11,7 @@ class UserController extends Controller
 {
 
     public $pageCount = 10;
-    public function __construct()
-    {
-    }
+    public function __construct() { }
     /**
      * Display a listing of the resource.
      *
