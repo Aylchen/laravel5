@@ -18,7 +18,7 @@
                     </div>
                 </li>
             @empty
-                <li class="am-g am-list-item-desced">暂无评论</li>
+                <li class="am-g am-list-item-desced" style="padding-top: 1rem;">暂无评论</li>
             @endforelse
         </ul>
         {!! $comments->render() !!}

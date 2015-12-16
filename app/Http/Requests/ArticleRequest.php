@@ -24,7 +24,7 @@ class ArticleRequest extends Request
     public function rules()
     {
         return [
-            'title'   => 'required',
+            'title'   => 'required|max:50',
             'content' => 'required'
         ];
     }

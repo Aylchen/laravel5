@@ -13,7 +13,10 @@
       {{--  @endif--}}
         <div class="page-header">
             <h3>{{ $article->title }}</h3>
-            <p class="text-center">Author：<small>{{ $article->user->username }}</small></p>
+            <div class="text-right">
+                {{ $article->user->username }}
+                <small>{{ $article->created_at }}</small>
+            </div>
         </div>
         <pre>{{ $article->content }}</pre>
 
@@ -55,7 +58,7 @@
                         <span class="am-list-date">{{ $comment->created_at }}</span>
                     </li>
                     @empty
-                        <li class="am-g am-list-item-dated">暂无评论</li>
+                        <li class="am-g am-list-item-desced">暂无评论</li>
                     @endforelse
 
                 </ul>
