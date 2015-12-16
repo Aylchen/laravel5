@@ -13,7 +13,7 @@
       {{--  @endif--}}
         <div class="page-header">
             <h3>{{ $article->title }}</h3>
-            <div class="text-right">
+            <div class="text-center">
                 {{ $article->user->username }}
                 <small>{{ $article->created_at }}</small>
             </div>
