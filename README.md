@@ -42,6 +42,8 @@ Open your browser, access `'http://localhost:8000'`, a home page which is about 
 
 
 ###NOTE
-The admin test account:<br/>
+1) If you want to reset your password in the front, you have to config your config/mail.php file, or the framework will 
+report some errors.<br/>
+2) The admin test account:<br/>
  `Aylchen`<br/>
  `123123`
