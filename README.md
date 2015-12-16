@@ -49,5 +49,5 @@ Open your browser, access `'http://localhost:8000'`, a home page which is about 
 report some errors.<br/>
 2) The admin test account:<br/>
 
-         `Aylchen`<br/>
+         `Aylchen`
          `123123`
